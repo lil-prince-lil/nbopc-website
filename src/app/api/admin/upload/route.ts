@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { writeFile, mkdir } from 'fs/promises'
-import path from 'path'
+import { put } from '@vercel/blob'
 import { getAdminFromRequest } from '@/lib/admin-auth'
 
 export async function POST(request: NextRequest) {
@@ -24,14 +23,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: '文件大小不能超过5MB' }, { status: 400 })
   }
 
-  const ext = path.extname(file.name) || '.png'
-  const filename = `${Date.now()}-${Math.random().toString(36).substring(2, 8)}${ext}`
+  try {
+    const blob = await put(`uploads/${Date.now()}-${file.name}`, file, {
+      access: 'public',
+    })
 
-  const uploadDir = path.join(process.cwd(), 'public', 'uploads')
-  await mkdir(uploadDir, { recursive: true })
-
-  const bytes = await file.arrayBuffer()
-  await writeFile(path.join(uploadDir, filename), Buffer.from(bytes))
-
-  return NextResponse.json({ url: `/uploads/${filename}` })
+    return NextResponse.json({ url: blob.url })
+  } catch (error: unknown) {
+    console.error('Upload error:', error)
+    return NextResponse.json({ error: '上传失败，请稍后重试' }, { status: 500 })
+  }
 }
