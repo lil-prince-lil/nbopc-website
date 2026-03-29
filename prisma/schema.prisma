@@ -1,0 +1,159 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// 管理员用户
+model Admin {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  name      String
+  role      String   @default("admin") // admin, superadmin
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// 注册用户
+model User {
+  id        String   @id @default(cuid())
+  phone     String   @unique
+  password  String
+  name      String   @default("")
+  avatar    String   @default("")
+  company   String   @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// OPC成员（图谱页面展示）
+model OpcMember {
+  id              String   @id @default(cuid())
+  name            String   // 姓名
+  avatar          String   @default("") // 头像
+  title           String   @default("") // 身份标签
+  quote           String   @default("") // 个人宣言
+  bio             String   @default("") // 个人背景
+  photo           String   @default("") // 个人照片
+  skills          String   @default("") // 擅长领域，逗号分隔
+  currentWork     String   @default("") // 正在做什么
+  category        String   @default("AI工具") // AI工具/跨境电商/设计创意/医疗健康/其他
+  productName     String   @default("") // 产品名称
+  productLogo     String   @default("") // 产品Logo
+  productDesc     String   @default("") // 产品一句话介绍
+  productDetail   String   @default("") // 产品详细介绍
+  productImg      String   @default("") // 产品截图
+  productStage    String   @default("") // 产品阶段：内测中/公测中/已上线/开发中
+  productLink     String   @default("") // 产品链接
+  order           Int      @default(0)
+  visible         Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// 活动
+model Activity {
+  id          String   @id @default(cuid())
+  title       String
+  summary     String   @default("")
+  content     String   @default("") // 富文本 HTML
+  coverImage  String   @default("")
+  date        String   @default("") // 活动日期
+  location    String   @default("") // 活动地点
+  status      String   @default("upcoming") // upcoming, ongoing, ended
+  tags        String   @default("") // JSON array
+  visible     Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// 资讯/新闻
+model Article {
+  id          String   @id @default(cuid())
+  title       String
+  summary     String   @default("")
+  content     String   @default("") // 富文本 HTML
+  coverImage  String   @default("")
+  category    String   @default("资讯") // 资讯/行业动态/社区公告
+  author      String   @default("NB OPC")
+  tags        String   @default("") // JSON array
+  visible     Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// 资源/文档
+model Resource {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @default("")
+  type        String   @default("document") // document, video, link, tool
+  url         String   @default("")
+  coverImage  String   @default("")
+  category    String   @default("文档")
+  visible     Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// 合作伙伴
+model Partner {
+  id        String   @id @default(cuid())
+  name      String
+  logo      String   @default("")
+  website   String   @default("")
+  category  String   @default("合作伙伴") // 合作伙伴/支持单位/媒体伙伴
+  order     Int      @default(0)
+  visible   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// 入驻申请
+model Application {
+  id          String   @id @default(cuid())
+  name        String
+  phone       String
+  email       String   @default("")
+  company     String   @default("")
+  position    String   @default("")
+  reason      String   @default("")
+  type        String   @default("个人") // 个人/企业
+  status      String   @default("pending") // pending, approved, rejected
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// 轮播图/Banner
+model Banner {
+  id        String   @id @default(cuid())
+  title     String   @default("")
+  image     String
+  link      String   @default("")
+  order     Int      @default(0)
+  visible   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// 网站配置（单例键值对）
+model SiteConfig {
+  key       String   @id
+  value     String   @default("")
+  updatedAt DateTime @updatedAt
+}
+
+// 活动报名
+model ActivitySignup {
+  id         String   @id @default(cuid())
+  activityId String
+  name       String
+  phone      String
+  email      String   @default("")
+  company    String   @default("")
+  createdAt  DateTime @default(now())
+}
