@@ -2,45 +2,41 @@ import { NextResponse } from 'next/server'
 
 export async function GET() {
   try {
-    // Test: manually create HTTP client without using @libsql/client's URL parser
-    const tursoUrl = (process.env.TURSO_DATABASE_URL || '').replace('libsql://', 'https://')
-    const token = process.env.TURSO_AUTH_TOKEN || ''
+    const tursoUrl = process.env.TURSO_DATABASE_URL || ''
 
-    // Use Turso HTTP API directly
-    const resp = await fetch(`${tursoUrl}/v2/pipeline`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        requests: [
-          { type: 'execute', stmt: { sql: 'SELECT COUNT(*) as count FROM Admin' } },
-          { type: 'close' },
-        ],
-      }),
-    })
-
-    if (!resp.ok) {
-      const text = await resp.text()
-      return NextResponse.json({ ok: false, status: resp.status, body: text.substring(0, 500) }, { status: 500 })
-    }
-
-    const data = await resp.json()
-    const count = data?.results?.[0]?.response?.result?.rows?.[0]?.[0]?.value
-
-    // Now test: can we parse the URL with globalThis.URL?
-    let urlTest = ''
+    // Test 1: Parse with @libsql/core URI parser
+    let uriResult = ''
     try {
-      new URL(tursoUrl)
-      urlTest = 'URL parse OK'
+      const { parseUri } = await import('@libsql/core/uri')
+      const parsed = parseUri(tursoUrl)
+      uriResult = `scheme=${parsed.scheme} host=${parsed.authority?.host} path=${parsed.path}`
     } catch (e: unknown) {
-      urlTest = `URL parse failed: ${(e as Error).message}`
+      uriResult = `FAIL: ${(e as Error).message}`
     }
 
-    return NextResponse.json({ ok: true, count, urlTest, nodeVersion: process.version })
+    // Test 2: expandConfig
+    let configResult = ''
+    try {
+      const { expandConfig } = await import('@libsql/core/config')
+      const config = expandConfig({ url: tursoUrl, authToken: process.env.TURSO_AUTH_TOKEN }, true)
+      configResult = `scheme=${config.scheme} authority=${JSON.stringify(config.authority)}`
+    } catch (e: unknown) {
+      configResult = `FAIL: ${(e as Error).message}`
+    }
+
+    // Test 3: createClient
+    let clientResult = ''
+    try {
+      const { createClient } = await import('@libsql/client')
+      const c = createClient({ url: tursoUrl, authToken: process.env.TURSO_AUTH_TOKEN })
+      const r = await c.execute('SELECT 1 as test')
+      clientResult = `OK: ${JSON.stringify(r.rows[0])}`
+    } catch (e: unknown) {
+      clientResult = `FAIL: ${(e as Error).message}`
+    }
+
+    return NextResponse.json({ uriResult, configResult, clientResult })
   } catch (e: unknown) {
-    const error = e as Error
-    return NextResponse.json({ ok: false, error: error.message?.substring(0, 500) }, { status: 500 })
+    return NextResponse.json({ error: (e as Error).message?.substring(0, 500) }, { status: 500 })
   }
 }
