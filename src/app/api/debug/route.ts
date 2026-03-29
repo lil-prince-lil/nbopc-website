@@ -2,36 +2,31 @@ import { NextResponse } from 'next/server'
 
 export async function GET() {
   const tursoUrl = process.env.TURSO_DATABASE_URL || ''
+  const httpsUrl = tursoUrl.replace('libsql://', 'https://')
 
   try {
-    // Test URL parsing
-    let parseResult = 'not tested'
-    try {
-      const u = new URL(tursoUrl)
-      parseResult = `OK: protocol=${u.protocol} host=${u.host}`
-    } catch (e: unknown) {
-      const err = e as Error
-      parseResult = `FAIL: ${err.message}`
-    }
-
-    // Try with https:// instead of libsql://
-    const httpsUrl = tursoUrl.replace('libsql://', 'https://')
-
-    const { createClient } = await import('@libsql/client/web')
-    const client = createClient({
-      url: httpsUrl,
-      authToken: process.env.TURSO_AUTH_TOKEN,
+    // Direct HTTP request to Turso
+    const resp = await fetch(`${httpsUrl}/v2/pipeline`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.TURSO_AUTH_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        requests: [
+          { type: 'execute', stmt: { sql: 'SELECT COUNT(*) as count FROM Admin' } },
+          { type: 'close' },
+        ],
+      }),
     })
 
-    const result = await client.execute('SELECT COUNT(*) as count FROM Admin')
+    const data = await resp.json()
+    const count = data?.results?.[0]?.response?.result?.rows?.[0]?.[0]?.value
 
     return NextResponse.json({
       ok: true,
-      count: result.rows[0]?.count,
-      parseResult,
+      count,
       nodeVersion: process.version,
-      urlLength: tursoUrl.length,
-      urlPreview: tursoUrl.substring(0, 60),
     })
   } catch (e: unknown) {
     const error = e as Error
@@ -39,8 +34,6 @@ export async function GET() {
       ok: false,
       error: error.message?.substring(0, 500),
       nodeVersion: process.version,
-      urlLength: tursoUrl.length,
-      urlHex: Buffer.from(tursoUrl.substring(0, 10)).toString('hex'),
     }, { status: 500 })
   }
 }
