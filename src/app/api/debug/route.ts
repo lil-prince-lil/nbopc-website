@@ -1,24 +1,28 @@
 import { NextResponse } from 'next/server'
-import { createClient } from '@libsql/client/http'
+import { PrismaLibSql } from '@prisma/adapter-libsql'
+import { PrismaClient } from '@/generated/prisma/client'
 
 export async function GET() {
   try {
-    const client = createClient({
-      url: process.env.TURSO_DATABASE_URL!.replace('libsql://', 'https://'),
+    // Use https:// URL for Vercel compatibility
+    const url = (process.env.TURSO_DATABASE_URL || '').replace('libsql://', 'https://')
+
+    const adapter = new PrismaLibSql({
+      url,
       authToken: process.env.TURSO_AUTH_TOKEN,
     })
 
-    const result = await client.execute('SELECT COUNT(*) as count FROM Admin')
+    const prisma = new PrismaClient({ adapter })
+    const count = await prisma.admin.count()
+    await prisma.$disconnect()
 
-    return NextResponse.json({
-      ok: true,
-      count: result.rows[0]?.count,
-    })
+    return NextResponse.json({ ok: true, count })
   } catch (e: unknown) {
     const error = e as Error
     return NextResponse.json({
       ok: false,
       error: error.message?.substring(0, 500),
+      name: error.name,
     }, { status: 500 })
   }
 }
