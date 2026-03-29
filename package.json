@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "20.x"
+    "node": "22.x"
   },
   "scripts": {
     "dev": "next dev",
@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@fontsource-variable/noto-sans-sc": "^5.2.10",
-    "@libsql/client": "^0.14.0",
+    "@libsql/client": "^0.17.2",
     "@prisma/adapter-better-sqlite3": "^7.6.0",
     "@prisma/adapter-libsql": "^7.6.0",
     "@prisma/client": "^7.6.0",
