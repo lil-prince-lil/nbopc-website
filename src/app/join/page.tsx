@@ -1,7 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { FormEvent } from 'react'
+
+interface FaqItem { question: string; answer: string }
 
 /* ─── Hero ─── */
 function HeroBanner() {
@@ -466,8 +468,11 @@ function AccordionItem({
   )
 }
 
-function FAQSection() {
+function FAQSection({ dynamicFaq }: { dynamicFaq?: FaqItem[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
+  const items = dynamicFaq && dynamicFaq.length > 0
+    ? dynamicFaq.map(f => ({ q: f.question, a: f.answer }))
+    : faqData
 
   return (
     <section className="py-20 px-6 bg-[#0F1D32]">
@@ -479,7 +484,7 @@ function FAQSection() {
           关于 NB OPC 社区，你可能想知道的
         </p>
         <div className="space-y-3">
-          {faqData.map((item, idx) => (
+          {items.map((item, idx) => (
             <AccordionItem
               key={idx}
               question={item.q}
@@ -569,12 +574,24 @@ function PartnerContact() {
 
 /* ─── Page ─── */
 export default function JoinPage() {
+  const [faq, setFaq] = useState<FaqItem[]>([])
+
+  useEffect(() => {
+    fetch('/api/public/config')
+      .then(res => res.json())
+      .then(data => {
+        const c = data.data || {}
+        try { if (c.join_faq) setFaq(JSON.parse(c.join_faq)) } catch {}
+      })
+      .catch(() => {})
+  }, [])
+
   return (
     <>
       <HeroBanner />
       <ResidencyTypes />
       <ApplicationForm />
-      <FAQSection />
+      <FAQSection dynamicFaq={faq.length > 0 ? faq : undefined} />
       <PartnerContact />
     </>
   )

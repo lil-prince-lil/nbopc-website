@@ -12,26 +12,29 @@ interface OpcMember {
   productStage: string
 }
 
-/* ---------- static data ---------- */
+/* ---------- default data ---------- */
 
-const AI_MODELS = [
+const DEFAULT_AI_MODELS = [
   { name: 'DeepSeek', desc: '国产开源大模型领军者', initial: 'D', gradient: 'from-blue-600 to-cyan-500' },
   { name: '通义千问', desc: '阿里云AI大模型', initial: '通', gradient: 'from-orange-500 to-amber-400' },
   { name: 'Kimi', desc: '长文本理解专家', initial: 'K', gradient: 'from-indigo-500 to-purple-500' },
   { name: 'Claude', desc: 'Anthropic AI助手', initial: 'C', gradient: 'from-amber-600 to-yellow-400' },
 ]
 
-const CLOUD_SERVICES = [
+const DEFAULT_CLOUD_SERVICES = [
   { name: '移动云', desc: 'OPC专属优惠', initial: '移', gradient: 'from-blue-500 to-blue-600' },
   { name: '华为云', desc: '创业者扶持计划', initial: '华', gradient: 'from-red-500 to-rose-500' },
   { name: '腾讯云', desc: '初创企业套餐', initial: '腾', gradient: 'from-blue-400 to-indigo-500' },
 ]
 
-const POLICY_ITEMS = [
+const DEFAULT_POLICY_ITEMS = [
   { title: '宁波市OPC专项扶持政策', desc: '针对AI原生一人公司的专项扶持政策，包括资金补贴、税收优惠等' },
   { title: '产业对接：制造业、外贸、跨境电商', desc: '连接宁波优势产业资源，助力AI创业者找到落地场景' },
   { title: '宁波大数据交易中心', desc: '提供合规数据交易服务，为AI创业者提供数据资源支撑' },
 ]
+
+const MODEL_GRADIENTS = ['from-blue-600 to-cyan-500', 'from-orange-500 to-amber-400', 'from-indigo-500 to-purple-500', 'from-amber-600 to-yellow-400', 'from-emerald-500 to-teal-500']
+const CLOUD_GRADIENTS = ['from-blue-500 to-blue-600', 'from-red-500 to-rose-500', 'from-blue-400 to-indigo-500', 'from-purple-500 to-pink-500']
 
 const STAGE_COLORS: Record<string, string> = {
   '内测中': 'bg-amber-500/10 text-amber-400 border border-amber-500/20',
@@ -54,6 +57,9 @@ const GRADIENTS = [
 export default function ResourcesPage() {
   const [membersWithProducts, setMembersWithProducts] = useState<OpcMember[]>([])
   const [loading, setLoading] = useState(true)
+  const [AI_MODELS, setAiModels] = useState(DEFAULT_AI_MODELS)
+  const [CLOUD_SERVICES, setCloudServices] = useState(DEFAULT_CLOUD_SERVICES)
+  const [POLICY_ITEMS, setPolicyItems] = useState(DEFAULT_POLICY_ITEMS)
 
   useEffect(() => {
     fetch('/api/public/opc-members')
@@ -64,6 +70,37 @@ export default function ResourcesPage() {
       })
       .catch(() => {})
       .finally(() => setLoading(false))
+
+    fetch('/api/public/config')
+      .then(res => res.json())
+      .then(data => {
+        const c = data.data || {}
+        try {
+          if (c.resources_ai_models) {
+            const models = JSON.parse(c.resources_ai_models)
+            setAiModels(models.map((m: { name: string; description: string }, i: number) => ({
+              name: m.name, desc: m.description, initial: m.name[0], gradient: MODEL_GRADIENTS[i % MODEL_GRADIENTS.length]
+            })))
+          }
+        } catch {}
+        try {
+          if (c.resources_cloud) {
+            const services = JSON.parse(c.resources_cloud)
+            setCloudServices(services.map((s: { name: string; description: string }, i: number) => ({
+              name: s.name, desc: s.description, initial: s.name[0], gradient: CLOUD_GRADIENTS[i % CLOUD_GRADIENTS.length]
+            })))
+          }
+        } catch {}
+        try {
+          if (c.resources_policy) {
+            const items = JSON.parse(c.resources_policy)
+            setPolicyItems(items.map((p: { title: string; description: string }) => ({
+              title: p.title, desc: p.description
+            })))
+          }
+        } catch {}
+      })
+      .catch(() => {})
   }, [])
 
   return (

@@ -2,7 +2,17 @@
 
 import { useEffect, useRef } from 'react'
 
-const timelineData = [
+interface TimelineItem {
+  date: string
+  title: string
+  description: string
+}
+
+interface TimelineProps {
+  items?: TimelineItem[]
+}
+
+const defaultTimelineData: TimelineItem[] = [
   {
     date: '2023年底',
     title: '社群萌芽',
@@ -41,7 +51,8 @@ const timelineData = [
   },
 ]
 
-export default function Timeline() {
+export default function Timeline({ items }: TimelineProps) {
+  const timelineData = items && items.length > 0 ? items : defaultTimelineData
   const itemRefs = useRef<(HTMLDivElement | null)[]>([])
 
   useEffect(() => {

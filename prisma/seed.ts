@@ -409,6 +409,47 @@ async function main() {
     { key: 'site_description', value: '汇聚AI时代的创业者与创新者' },
     { key: 'contact_email', value: 'contact@nbopc.org.cn' },
     { key: 'contact_wechat', value: 'NBOPC_Official' },
+    { key: 'about_intro', value: 'NB OPC 社区，是宁波第一个专为 AI 原生独立创业者（One Person Company）打造的市级孵化社区。\n\n在 AI 技术快速普及的今天，一个人借助 AI 工具，完全有可能独立完成一款产品从 0 到 1 的构建——写代码、做设计、跑运营、接客户。我们相信，「一人公司」不是过渡，而是未来最有活力的创业形态之一。\n\nNB OPC 社区成立于 2026 年，由宁波软件行业协会人工智能应用专委会主管运营。社区聚焦「高频交流 + 资源对接 + 产业落地」三个核心，通过线上线下活动、API 资源补贴、产业客户对接等方式，帮助每一位 AI 原生创业者在宁波找到根据地。\n\n目前社区已入驻多个充满活力和梦想的 AI OPC，覆盖 AI 工具、AI 应用、垂直行业解决方案等多个方向，累计举办活动 300+，触达企业超过 500+。\n\n我们的口号是：「让每一个 AI 原生创业者，在宁波找到根据地。」' },
+    { key: 'about_mission', value: '孵化 AI Native 创业者，用AI赋能千行百业，推动 AI 项目在宁波真实落地、商业化变现。' },
+    { key: 'about_vision', value: '成为中国最活跃的城市级 AI OPC 生态社区，让一人公司成为宁波数字经济的新生力量。' },
+    { key: 'about_endorsement', value: 'NB OPC 社区受宁波市经信局支持，由宁波软件行业协会人工智能应用专委会主管运营，是宁波市政府认可的市级 AI OPC 官方社区平台。' },
+    { key: 'about_team', value: JSON.stringify([{ name: '李乐源', role: '社区发起人/主理人', bio: '专注AI创业生态建设，推动宁波AI产业落地', avatar: '' }]) },
+    { key: 'about_timeline', value: JSON.stringify([
+      { date: '2023年底', title: '社群萌芽', description: 'ChatGPT 掀起 AI 热潮，一场以 AI 为主题的公开聚会成为转折点' },
+      { date: '2024年初', title: '"多个伙伴"AI社群正式起步', description: '创始人李乐源正式创立"多个伙伴"AI社群' },
+      { date: '2024年10月', title: '首次品牌线下合作', description: '社群与东钱湖韩岭景区合作举办AI线下展览' },
+      { date: '2025年4月', title: '甬派AI众创空间启动', description: '甬派客户端与"多个伙伴"AI社群共同成立' },
+      { date: '2025年', title: '宁波OPC生态持续成长', description: '宁波启动城市级开源社区"NBopen"' },
+      { date: '2026年4月', title: 'NBOPC社区正式成立', description: '宁波OPC社区正式成立，标志着两年多积累正式升级' },
+    ]) },
+    { key: 'join_faq', value: JSON.stringify([
+      { question: '什么是 OPC？', answer: 'OPC 是 One Person Company 的缩写，指借助 AI 工具独立运营的一人公司。' },
+      { question: '入驻需要付费吗？', answer: '目前社区入驻完全免费。' },
+      { question: '没有产品可以入驻吗？', answer: '当然可以！只要你对AI创业感兴趣都欢迎加入。' },
+      { question: '入驻后有什么义务？', answer: '鼓励积极参与活动和分享经验，但没有强制义务。' },
+      { question: '如何获取API资源补贴？', answer: '入驻成员可通过平台申请，具体方案将在二期上线。' },
+      { question: '活动在哪里举办？', answer: '主要在宁波市区，也有线上活动。' },
+      { question: '外地可以参与吗？', answer: '可以！我们有线上活动和远程协作机制。' },
+      { question: '如何联系我们？', answer: '邮箱：contact@nbopc.org.cn' },
+    ]) },
+    { key: 'join_contact_email', value: 'contact@nbopc.org.cn' },
+    { key: 'join_contact_desc', value: '如果您是企业、机构或投资方，希望与 NB OPC 社区建立合作，请联系我们' },
+    { key: 'resources_ai_models', value: JSON.stringify([
+      { name: 'DeepSeek', description: '国产开源大模型领军者', status: '即将开放' },
+      { name: '通义千问', description: '阿里云AI大模型', status: '即将开放' },
+      { name: 'Kimi', description: '长文本理解专家', status: '即将开放' },
+      { name: 'Claude', description: 'Anthropic AI助手', status: '即将开放' },
+    ]) },
+    { key: 'resources_cloud', value: JSON.stringify([
+      { name: '移动云', description: 'OPC专属优惠', offer: '创业者扶持计划' },
+      { name: '华为云', description: '创业者扶持计划', offer: '免费云资源' },
+      { name: '腾讯云', description: '初创企业套餐', offer: '初创扶持' },
+    ]) },
+    { key: 'resources_policy', value: JSON.stringify([
+      { title: '宁波市OPC专项扶持政策', description: '为AI创业者提供政策支持' },
+      { title: '产业对接：制造业·外贸·跨境电商', description: '连接宁波产业资源' },
+      { title: '宁波大数据交易中心', description: '数据资源支持' },
+    ]) },
   ]
 
   for (const config of configs) {
