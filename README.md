@@ -33,6 +33,9 @@ NB OPC（Ningbo One Person Company）社区官网，是宁波首个专为 AI 原
 - 入驻申请查看与审批
 - 报名数据管理 + CSV 导出
 - 用户管理
+- 关于我们内容编辑（社区介绍、使命愿景、团队成员、发展历程）
+- 加入我们内容编辑（FAQ、联系方式）
+- 资源管理内容编辑（AI 模型、云服务、政策资源）
 - 站点设置（Logo 上传、基础配置）
 - 图片上传（Vercel Blob 云存储）
 
@@ -150,7 +153,11 @@ NB OPC (Ningbo One Person Company) is the official website for Ningbo's first mu
 - Full CRUD for articles, activities, OPC members, partners
 - Application review & approval
 - Event signup data management + CSV export
-- User management, site settings, logo upload
+- User management
+- About Us content editor (intro, mission, team, timeline)
+- Join Us content editor (FAQ, contact info)
+- Resources content editor (AI models, cloud services, policy)
+- Site settings (logo upload, basic config)
 - Image upload via Vercel Blob cloud storage
 
 **User System**
