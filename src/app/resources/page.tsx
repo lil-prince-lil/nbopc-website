@@ -14,17 +14,33 @@ interface OpcMember {
 
 /* ---------- default data ---------- */
 
-const DEFAULT_AI_MODELS = [
-  { name: 'DeepSeek', desc: '国产开源大模型领军者', initial: 'D', gradient: 'from-blue-600 to-cyan-500' },
-  { name: '通义千问', desc: '阿里云AI大模型', initial: '通', gradient: 'from-orange-500 to-amber-400' },
-  { name: 'Kimi', desc: '长文本理解专家', initial: 'K', gradient: 'from-indigo-500 to-purple-500' },
-  { name: 'Claude', desc: 'Anthropic AI助手', initial: 'C', gradient: 'from-amber-600 to-yellow-400' },
-]
-
-const DEFAULT_CLOUD_SERVICES = [
-  { name: '移动云', desc: 'OPC专属优惠', initial: '移', gradient: 'from-blue-500 to-blue-600' },
-  { name: '华为云', desc: '创业者扶持计划', initial: '华', gradient: 'from-red-500 to-rose-500' },
-  { name: '腾讯云', desc: '初创企业套餐', initial: '腾', gradient: 'from-blue-400 to-indigo-500' },
+// AI 模型按类别展示（过渡阶段：统一走飞书表单申请，人工开通）
+const AI_MODEL_CATEGORIES: Array<{ category: string; gradient: string; models: string[] }> = [
+  {
+    category: '大语言模型',
+    gradient: 'from-blue-500 to-indigo-500',
+    models: ['MiniMax-M2.5', 'DeepSeek-R1', 'DeepSeek-V3', 'qwen3-max', 'qwen3.5-plus'],
+  },
+  {
+    category: '图像模型',
+    gradient: 'from-pink-500 to-rose-500',
+    models: ['Doubao-Seedream-5.0-lite', 'Doubao-Seedream-4.5', 'qwen-image-2.0-pro', 'qwen-image-2.0'],
+  },
+  {
+    category: '视频模型',
+    gradient: 'from-purple-500 to-fuchsia-500',
+    models: ['Doubao-Seedance-2.0-fast', 'Doubao-Seedance-2.0', 'Doubao-Seedance-1.5-pro', 'wan2.6-t2v'],
+  },
+  {
+    category: '语音模型',
+    gradient: 'from-emerald-500 to-teal-500',
+    models: ['CosyVoice', 'SenseVoice', 'qwen3-tts-instruct-flash', 'qwen3-asr-flash-filetrans', 'qwen3-asr-flash-realtime', 'cosyvoice-v3.5-flash'],
+  },
+  {
+    category: '图形化界面模型',
+    gradient: 'from-amber-500 to-orange-500',
+    models: ['gui-plus'],
+  },
 ]
 
 const DEFAULT_POLICY_ITEMS = [
@@ -32,9 +48,6 @@ const DEFAULT_POLICY_ITEMS = [
   { title: '产业对接：制造业、外贸、跨境电商', desc: '连接宁波优势产业资源，助力AI创业者找到落地场景' },
   { title: '宁波大数据交易中心', desc: '提供合规数据交易服务，为AI创业者提供数据资源支撑' },
 ]
-
-const MODEL_GRADIENTS = ['from-blue-600 to-cyan-500', 'from-orange-500 to-amber-400', 'from-indigo-500 to-purple-500', 'from-amber-600 to-yellow-400', 'from-emerald-500 to-teal-500']
-const CLOUD_GRADIENTS = ['from-blue-500 to-blue-600', 'from-red-500 to-rose-500', 'from-blue-400 to-indigo-500', 'from-purple-500 to-pink-500']
 
 const STAGE_COLORS: Record<string, string> = {
   '内测中': 'bg-amber-500/10 text-amber-400 border border-amber-500/20',
@@ -52,13 +65,15 @@ const GRADIENTS = [
   'from-cyan-500 to-blue-500',
 ]
 
+// 飞书申请表单（过渡方案：人工受理开通资源）
+const AI_MODEL_APPLY_URL = 'https://pq2povrxukm.feishu.cn/share/base/form/shrcnn8RPGyQRcGrwlpAZj6aqAh'
+const CLOUD_APPLY_URL = 'https://pq2povrxukm.feishu.cn/share/base/form/shrcn7iegcRELlh9rVb1ySQ6G8c'
+
 /* ---------- page ---------- */
 
 export default function ResourcesPage() {
   const [membersWithProducts, setMembersWithProducts] = useState<OpcMember[]>([])
   const [loading, setLoading] = useState(true)
-  const [AI_MODELS, setAiModels] = useState(DEFAULT_AI_MODELS)
-  const [CLOUD_SERVICES, setCloudServices] = useState(DEFAULT_CLOUD_SERVICES)
   const [POLICY_ITEMS, setPolicyItems] = useState(DEFAULT_POLICY_ITEMS)
 
   useEffect(() => {
@@ -75,22 +90,6 @@ export default function ResourcesPage() {
       .then(res => res.json())
       .then(data => {
         const c = data.data || {}
-        try {
-          if (c.resources_ai_models) {
-            const models = JSON.parse(c.resources_ai_models)
-            setAiModels(models.map((m: { name: string; description: string }, i: number) => ({
-              name: m.name, desc: m.description, initial: m.name[0], gradient: MODEL_GRADIENTS[i % MODEL_GRADIENTS.length]
-            })))
-          }
-        } catch {}
-        try {
-          if (c.resources_cloud) {
-            const services = JSON.parse(c.resources_cloud)
-            setCloudServices(services.map((s: { name: string; description: string }, i: number) => ({
-              name: s.name, desc: s.description, initial: s.name[0], gradient: CLOUD_GRADIENTS[i % CLOUD_GRADIENTS.length]
-            })))
-          }
-        } catch {}
         try {
           if (c.resources_policy) {
             const items = JSON.parse(c.resources_policy)
@@ -152,37 +151,48 @@ export default function ResourcesPage() {
               为 OPC 创业者提供主流 AI 大模型的 API 接入服务，降低 AI 应用开发门槛
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {AI_MODELS.map((model) => (
-              <div
-                key={model.name}
-                className="bg-[#132238] rounded-2xl border border-white/10 p-6 hover:shadow-md transition-shadow"
-              >
-                <div
-                  className={`w-12 h-12 rounded-xl bg-gradient-to-br ${model.gradient} flex items-center justify-center text-white font-bold text-lg mb-4 shadow-md`}
-                >
-                  {model.initial}
+
+          {/* 可选模型清单（按类别展示） */}
+          <div className="space-y-6">
+            {AI_MODEL_CATEGORIES.map((cat) => (
+              <div key={cat.category} className="bg-[#132238] rounded-2xl border border-white/10 p-6 sm:p-7">
+                <h3 className="flex items-center gap-2.5 text-base sm:text-lg font-semibold text-white mb-4">
+                  <span className={`w-2.5 h-2.5 rounded-full bg-gradient-to-br ${cat.gradient}`} />
+                  {cat.category}
+                  <span className="ml-1 text-xs font-normal text-gray-500">
+                    共 {cat.models.length} 款
+                  </span>
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {cat.models.map((m) => (
+                    <span
+                      key={m}
+                      className="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium text-gray-200 bg-white/5 border border-white/10"
+                    >
+                      {m}
+                    </span>
+                  ))}
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-1">{model.name}</h3>
-                <p className="text-sm text-gray-400 mb-5">{model.desc}</p>
-                <button
-                  disabled
-                  className="w-full py-2 rounded-lg text-sm font-medium text-gray-500 bg-white/5 border border-white/10 cursor-not-allowed"
-                >
-                  即将开放
-                </button>
               </div>
             ))}
-            {/* More coming card */}
-            <div className="bg-[#132238] rounded-2xl border border-dashed border-white/10 p-6 flex flex-col items-center justify-center text-center">
-              <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-gray-500 mb-4">
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                </svg>
-              </div>
-              <h3 className="text-base font-medium text-gray-400 mb-1">更多模型</h3>
-              <p className="text-sm text-gray-400">持续接入中...</p>
-            </div>
+          </div>
+
+          {/* 统一申请入口 */}
+          <div className="mt-10 flex flex-col items-center text-center">
+            <a
+              href={AI_MODEL_APPLY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-white font-semibold text-base bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity shadow-md shadow-primary/20"
+            >
+              申请 AI 模型 API
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+              </svg>
+            </a>
+            <p className="mt-3 text-xs text-gray-500">
+              提交后由 NB OPC 社区运营团队人工受理并为你开通
+            </p>
           </div>
         </div>
       </section>
@@ -196,30 +206,37 @@ export default function ResourcesPage() {
               云服务资源
             </h2>
             <p className="text-gray-400 max-w-2xl">
-              与主流云服务商合作，为 OPC 创业者提供专属优惠和扶持计划
+              与移动云合作，为 OPC 创业者提供专属优惠和扶持计划
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {CLOUD_SERVICES.map((svc) => (
-              <div
-                key={svc.name}
-                className="bg-[#132238] rounded-2xl border border-white/10 p-6 hover:shadow-md transition-shadow"
-              >
-                <div
-                  className={`w-12 h-12 rounded-xl bg-gradient-to-br ${svc.gradient} flex items-center justify-center text-white font-bold text-lg mb-4 shadow-md`}
-                >
-                  {svc.initial}
-                </div>
-                <h3 className="text-lg font-semibold text-white mb-1">{svc.name}</h3>
-                <p className="text-sm text-gray-400 mb-5">{svc.desc}</p>
-                <button
-                  disabled
-                  className="w-full py-2 rounded-lg text-sm font-medium text-gray-500 bg-white/5 border border-white/10 cursor-not-allowed"
-                >
-                  即将开放
-                </button>
+
+          {/* 移动云卡片（居中展示） */}
+          <div className="max-w-md mx-auto">
+            <div className="bg-[#132238] rounded-2xl border border-white/10 p-8 text-center">
+              <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold text-2xl mb-5 shadow-md">
+                移
               </div>
-            ))}
+              <h3 className="text-xl font-semibold text-white mb-2">移动云</h3>
+              <p className="text-sm text-gray-400">OPC 专属优惠 · 创业者扶持计划</p>
+            </div>
+          </div>
+
+          {/* 统一申请入口 */}
+          <div className="mt-10 flex flex-col items-center text-center">
+            <a
+              href={CLOUD_APPLY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-white font-semibold text-base bg-gradient-to-r from-secondary to-accent hover:opacity-90 transition-opacity shadow-md shadow-secondary/20"
+            >
+              申请云资源
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+              </svg>
+            </a>
+            <p className="mt-3 text-xs text-gray-500">
+              提交后由 NB OPC 社区运营团队人工受理并为你开通
+            </p>
           </div>
         </div>
       </section>
