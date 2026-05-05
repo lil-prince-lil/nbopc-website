@@ -44,7 +44,7 @@ export default function Footer() {
               {[
                 { label: '首页', href: '/' },
                 { label: '活动', href: '/activities' },
-                { label: 'OPC图谱', href: '/atlas' },
+                { label: 'OPC社区图谱', href: '/communities' },
                 { label: '资源', href: '/resources' },
               ].map((link) => (
                 <li key={link.href}>

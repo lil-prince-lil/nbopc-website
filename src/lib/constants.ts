@@ -5,7 +5,7 @@ export const SITE_DESCRIPTION = '汇聚AI时代的创业者与创新者，用技
 export const NAV_ITEMS = [
   { label: '首页', href: '/' },
   { label: '活动', href: '/activities' },
-  { label: 'OPC图谱', href: '/atlas' },
+  { label: 'OPC社区图谱', href: '/communities' },
   { label: '资源', href: '/resources' },
   { label: '资讯', href: '/news' },
   { label: '关于我们', href: '/about' },
