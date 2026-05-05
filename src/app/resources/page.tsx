@@ -206,18 +206,30 @@ export default function ResourcesPage() {
               云服务资源
             </h2>
             <p className="text-gray-400 max-w-2xl">
-              与移动云合作，为 OPC 创业者提供专属优惠和扶持计划
+              为 OPC 创业者提供专属优惠和扶持计划，覆盖云主机与云电脑两类资源
             </p>
           </div>
 
-          {/* 移动云卡片（居中展示） */}
-          <div className="max-w-md mx-auto">
+          {/* 云主机 + 云电脑 双卡片 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
             <div className="bg-[#132238] rounded-2xl border border-white/10 p-8 text-center">
-              <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold text-2xl mb-5 shadow-md">
-                移
+              <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white mb-5 shadow-md">
+                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 0 1-3-3m3 3a3 3 0 1 0 0 6h13.5a3 3 0 1 0 0-6m-16.5-3a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3m-19.5 0a4.5 4.5 0 0 1 .9-2.7L5.737 5.1a3.375 3.375 0 0 1 2.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 0 1 .9 2.7m0 0a3 3 0 0 1-3 3m0 3h.008v.008h-.008v-.008Zm0-6h.008v.008h-.008v-.008Zm-3 6h.008v.008h-.008v-.008Zm0-6h.008v.008h-.008v-.008Z" />
+                </svg>
               </div>
-              <h3 className="text-xl font-semibold text-white mb-2">移动云</h3>
-              <p className="text-sm text-gray-400">OPC 专属优惠 · 创业者扶持计划</p>
+              <h3 className="text-xl font-semibold text-white mb-2">云主机</h3>
+              <p className="text-sm text-gray-400">弹性计算服务器 · 部署 AI 应用与服务</p>
+            </div>
+
+            <div className="bg-[#132238] rounded-2xl border border-white/10 p-8 text-center">
+              <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-cyan-500 to-teal-500 flex items-center justify-center text-white mb-5 shadow-md">
+                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-2">云电脑</h3>
+              <p className="text-sm text-gray-400">远程桌面与 GPU 算力 · 适合模型训练与图形处理</p>
             </div>
           </div>
 
