@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { SITE_NAME } from '@/lib/constants'
 
 export default function Footer() {
-  const [logo, setLogo] = useState('')
+  const [logo, setLogo] = useState('/logo.png')
 
   useEffect(() => {
     fetch('/api/public/config')

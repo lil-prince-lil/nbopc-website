@@ -17,7 +17,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [user, setUser] = useState<UserInfo | null>(null)
   const [dropdownOpen, setDropdownOpen] = useState(false)
-  const [logo, setLogo] = useState('')
+  const [logo, setLogo] = useState('/logo.png')
   const dropdownRef = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
   const router = useRouter()
