@@ -58,6 +58,16 @@ export default function Header() {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
+  // 锁定背景滚动，避免移动菜单展开时底层页面跟着滚
+  useEffect(() => {
+    if (!mobileMenuOpen) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = prev
+    }
+  }, [mobileMenuOpen])
+
   async function handleLogout() {
     await fetch('/api/auth/logout', { method: 'POST' })
     setUser(null)
@@ -174,7 +184,7 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 top-16 z-40 bg-[#0B1628]/98 backdrop-blur-xl">
+        <div className="md:hidden fixed inset-x-0 top-16 bottom-0 z-40 bg-[#0B1628]/95 backdrop-blur-xl overflow-y-auto overscroll-contain">
           <div className="flex flex-col px-6 py-8 gap-2">
             {NAV_ITEMS.map((item) => {
               const isActive = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href)
