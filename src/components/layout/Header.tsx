@@ -160,54 +160,96 @@ export default function Header() {
           </div>
 
           {/* Mobile Menu Button */}
-          <button type="button"
-            className="md:hidden inline-flex items-center justify-center p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-colors"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label={mobileMenuOpen ? '关闭菜单' : '打开菜单'}>
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-              {mobileMenuOpen
-                ? <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                : <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />}
+          <button
+            type="button"
+            className="md:hidden inline-flex items-center justify-center p-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/5 active:bg-white/10 transition-colors"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu"
+            aria-label={mobileMenuOpen ? '关闭菜单' : '打开菜单'}
+          >
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+              {mobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+              )}
             </svg>
           </button>
         </div>
       </nav>
 
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 top-16 z-40 bg-[#0B1628]/95 backdrop-blur-xl overflow-y-auto">
-          <div className="flex flex-col px-6 py-8 gap-2">
-            {NAV_ITEMS.map((item) => {
-              const isActive = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href)
-              return (
-                <Link key={item.href} href={item.href}
-                  className={`px-4 py-3 text-lg font-medium rounded-xl transition-colors ${
-                    isActive ? 'text-[#1EAF8E] bg-[#1EAF8E]/10' : 'text-gray-300 hover:text-white hover:bg-white/5'
-                  }`}>
-                  {item.label}
+      {/*
+        Mobile Menu — 下拉手风琴式
+        - 永远渲染（避免 conditional render 引发的 hydration 问题）
+        - 实色背景，不依赖 backdrop-blur / 透明度
+        - 用 max-height + transition 实现平滑展开
+        - 直接挂在 header 下方，不依赖额外的 fixed/inset 定位
+      */}
+      <div
+        id="mobile-menu"
+        aria-hidden={!mobileMenuOpen}
+        className={`md:hidden overflow-hidden bg-[#0B1628] border-t border-white/5 transition-[max-height] duration-300 ease-out ${
+          mobileMenuOpen ? 'max-h-[80vh] overflow-y-auto' : 'max-h-0'
+        }`}
+      >
+        <nav className="px-4 py-3 flex flex-col gap-1">
+          {NAV_ITEMS.map((item) => {
+            const isActive = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href)
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`px-4 py-3 text-base font-medium rounded-lg transition-colors ${
+                  isActive
+                    ? 'text-[#1EAF8E] bg-[#1EAF8E]/10'
+                    : 'text-gray-300 hover:text-white hover:bg-white/5 active:bg-white/10'
+                }`}
+              >
+                {item.label}
+              </Link>
+            )
+          })}
+
+          <div className="mt-2 pt-3 border-t border-white/10 flex flex-col gap-2">
+            {user ? (
+              <>
+                <Link
+                  href="/profile"
+                  className="flex items-center gap-3 px-4 py-3 text-base font-medium text-gray-300 rounded-lg active:bg-white/10"
+                >
+                  <span className="w-8 h-8 rounded-full bg-gradient-to-r from-[#2857A4] to-[#1EAF8E] flex items-center justify-center text-white text-sm font-medium">
+                    {user.name.charAt(0).toUpperCase()}
+                  </span>
+                  {user.name}
                 </Link>
-              )
-            })}
-            <div className="mt-6 pt-6 border-t border-white/10 flex flex-col gap-3">
-              {user ? (
-                <>
-                  <Link href="/profile" className="px-4 py-3 text-lg font-medium text-gray-300 rounded-xl hover:bg-white/5 transition-colors flex items-center gap-3">
-                    <span className="w-8 h-8 rounded-full bg-gradient-to-r from-[#2857A4] to-[#1EAF8E] flex items-center justify-center text-white text-sm font-medium">
-                      {user.name.charAt(0).toUpperCase()}
-                    </span>
-                    {user.name}
-                  </Link>
-                  <button type="button" onClick={handleLogout} className="px-4 py-3 text-center text-lg font-medium text-red-400 rounded-xl hover:bg-red-500/10 transition-colors">退出登录</button>
-                </>
-              ) : (
-                <>
-                  <Link href="/login" className="px-4 py-3 text-center text-lg font-medium text-gray-300 rounded-xl hover:bg-white/5 transition-colors">登录</Link>
-                  <Link href="/register" className="px-4 py-3 text-center text-lg font-medium text-white bg-gradient-to-r from-[#2857A4] to-[#1EAF8E] rounded-xl hover:opacity-90 transition-opacity">注册</Link>
-                </>
-              )}
-            </div>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="px-4 py-3 text-center text-base font-medium text-red-400 rounded-lg active:bg-red-500/10"
+                >
+                  退出登录
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="px-4 py-3 text-center text-base font-medium text-gray-300 rounded-lg border border-white/10 active:bg-white/10"
+                >
+                  登录
+                </Link>
+                <Link
+                  href="/register"
+                  className="px-4 py-3 text-center text-base font-medium text-white bg-gradient-to-r from-[#2857A4] to-[#1EAF8E] rounded-lg shadow-md shadow-[#2857A4]/20"
+                >
+                  注册
+                </Link>
+              </>
+            )}
           </div>
-        </div>
-      )}
+        </nav>
+      </div>
     </header>
   )
 }
