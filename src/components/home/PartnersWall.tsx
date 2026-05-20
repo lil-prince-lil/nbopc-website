@@ -27,7 +27,7 @@ export default function PartnersWall() {
     <section id="partners" className="py-20 bg-[#0B1628]">
       <div ref={sectionRef} className="max-w-6xl mx-auto px-6">
         <div className="reveal mb-10">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white">合作伙伴与背书</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white">专委会合作伙伴与支持单位</h2>
         </div>
 
         {loading ? (

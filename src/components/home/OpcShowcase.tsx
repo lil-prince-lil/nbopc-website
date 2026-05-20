@@ -58,8 +58,8 @@ export default function OpcShowcase() {
       <div ref={sectionRef} className="max-w-6xl mx-auto px-6">
         <div className="reveal flex items-center justify-between mb-10">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">OPC 矩阵</h2>
-            <p className="text-gray-400 mt-2 text-base">有趣的 AI 原生创业者，正在宁波把想法变成现实</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">专委会委员矩阵</h2>
+            <p className="text-gray-400 mt-2 text-base">专委会委员与生态伙伴，共同构建宁波 AI 应用生态</p>
           </div>
           <Link href="/atlas" className="text-sm text-[#1EAF8E] hover:underline font-medium hidden sm:flex items-center gap-1">
             查看全部

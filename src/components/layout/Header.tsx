@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { NAV_ITEMS, SITE_NAME } from '@/lib/constants'
+import { NAV_ITEMS, SITE_NAME, ASSOCIATION_SITE } from '@/lib/constants'
 
 interface UserInfo {
   id: string
@@ -74,10 +74,16 @@ export default function Header() {
     }`}>
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5">
+          {/* Logo + 副标题 */}
+          <Link href="/" className="flex items-center gap-3">
             {logo && logo.startsWith('/') ? (
-              <img src={logo} alt="NB OPC" className="h-8" />
+              <>
+                <img src={logo} alt="NBOPC" className="h-8" />
+                <span className="hidden lg:flex flex-col leading-tight border-l border-white/15 pl-3">
+                  <span className="text-xs font-medium text-gray-200">NBOPC 赋能平台</span>
+                  <span className="text-[10px] text-gray-500">宁波市软件行业协会人工智能专委会</span>
+                </span>
+              </>
             ) : (
               <>
                 {/* AI Brain SVG Icon */}
@@ -128,8 +134,21 @@ export default function Header() {
             })}
           </div>
 
-          {/* Desktop Auth */}
+          {/* Desktop Auth + 协会官网 */}
           <div className="hidden md:flex md:items-center md:gap-3">
+            {/* 协会官网外链 */}
+            <a
+              href={ASSOCIATION_SITE.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden lg:inline-flex items-center gap-1 text-xs font-medium text-gray-400 hover:text-white transition-colors px-2 py-1 rounded border border-white/10 hover:border-white/30"
+              title={ASSOCIATION_SITE.label}
+            >
+              协会官网
+              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+              </svg>
+            </a>
             {user ? (
               <div className="relative" ref={dropdownRef}>
                 <button type="button" onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -153,8 +172,8 @@ export default function Header() {
               </div>
             ) : (
               <>
-                <Link href="/login" className="text-sm font-medium text-gray-300 hover:text-white transition-colors px-3 py-2">登录</Link>
-                <Link href="/register" className="text-sm font-medium text-white bg-gradient-to-r from-[#2857A4] to-[#1EAF8E] px-4 py-2 rounded-lg hover:opacity-90 transition-opacity shadow-lg shadow-[#2857A4]/20">注册</Link>
+                <Link href="/login" className="text-sm font-medium text-gray-300 hover:text-white transition-colors px-3 py-2">委员登录</Link>
+                <Link href="/register" className="text-sm font-medium text-white bg-gradient-to-r from-[#2857A4] to-[#1EAF8E] px-4 py-2 rounded-lg hover:opacity-90 transition-opacity shadow-lg shadow-[#2857A4]/20">申请入口</Link>
               </>
             )}
           </div>
@@ -212,6 +231,19 @@ export default function Header() {
           })}
 
           <div className="mt-2 pt-3 border-t border-white/10 flex flex-col gap-2">
+            {/* 协会官网外链（移动菜单底部） */}
+            <a
+              href={ASSOCIATION_SITE.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-1.5 px-4 py-3 text-sm font-medium text-gray-400 rounded-lg border border-white/10 active:bg-white/10"
+            >
+              {ASSOCIATION_SITE.label}
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+              </svg>
+            </a>
+
             {user ? (
               <>
                 <Link
@@ -237,13 +269,13 @@ export default function Header() {
                   href="/login"
                   className="px-4 py-3 text-center text-base font-medium text-gray-300 rounded-lg border border-white/10 active:bg-white/10"
                 >
-                  登录
+                  委员登录
                 </Link>
                 <Link
                   href="/register"
                   className="px-4 py-3 text-center text-base font-medium text-white bg-gradient-to-r from-[#2857A4] to-[#1EAF8E] rounded-lg shadow-md shadow-[#2857A4]/20"
                 >
-                  注册
+                  申请入口
                 </Link>
               </>
             )}

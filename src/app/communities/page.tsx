@@ -464,7 +464,7 @@ export default function CommunitiesPage() {
         />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4 tracking-tight">
-            OPC 社区图谱
+            专委会图谱
           </h1>
           <p className="text-lg sm:text-xl text-sky-200/80 max-w-3xl mx-auto leading-relaxed">
             宁波 AI 原生独立创业者的孵化生态 · 截至 2026 年 5 月

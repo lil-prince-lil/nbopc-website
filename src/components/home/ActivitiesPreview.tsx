@@ -42,7 +42,7 @@ export default function ActivitiesPreview() {
       <div ref={sectionRef} className="max-w-6xl mx-auto px-6">
         <div className="reveal flex items-center justify-between mb-10">
           <h2 className="text-2xl sm:text-3xl font-bold text-white">
-            近期活动预告
+            专委会近期活动
           </h2>
           <Link
             href="/activities"

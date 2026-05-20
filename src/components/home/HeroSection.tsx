@@ -59,26 +59,29 @@ export default function HeroSection() {
 
       {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        <h1 className="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight tracking-tight mb-10">
-          让每一个 AI 原生创业者
-          <br />
-          <span className="bg-gradient-to-r from-[#2857A4] via-[#1EAF8E] to-[#2857A4] bg-clip-text text-transparent">
-            在宁波找到根据地
+        <h1 className="hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight mb-6">
+          <span className="block">NBOPC 赋能平台</span>
+          <span className="block mt-2 bg-gradient-to-r from-[#2857A4] via-[#1EAF8E] to-[#2857A4] bg-clip-text text-transparent">
+            宁波 AI 下半场 · 场景驱动 · 生态协同
           </span>
         </h1>
+
+        <p className="hero-tags text-base sm:text-lg text-sky-200/80 mb-10 max-w-2xl mx-auto">
+          宁波市软件行业协会人工智能专委会官方平台
+        </p>
 
         <div className="flex flex-col items-center gap-3 mb-12">
           <span className="hero-tags inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-medium text-sky-200/90 bg-white/[0.06] backdrop-blur-sm border border-white/[0.08]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#2857A4] animate-pulse" />
-            宁波首个 AI Native OPC 孵化社区
+            宁波首个 AI OPC 生态赋能平台
           </span>
           <span className="hero-tags inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-medium text-sky-200/90 bg-white/[0.06] backdrop-blur-sm border border-white/[0.08]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#1EAF8E] animate-pulse" />
-            市级 OPC 社区官方平台
+            宁波市软件行业协会人工智能应用专委会运营
           </span>
           <span className="hero-tags inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-medium text-sky-200/90 bg-white/[0.06] backdrop-blur-sm border border-white/[0.08]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#1EAF8E] animate-pulse" />
-            宁波软件行业协会人工智能应用专委会主管运营
+            聚焦外贸与制造场景的 AI 应用孵化枢纽
           </span>
         </div>
 
@@ -87,14 +90,14 @@ export default function HeroSection() {
             href="/join"
             className="group px-8 py-3.5 rounded-full text-white font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-[#2857A4]/25 bg-gradient-to-r from-[#2857A4] to-[#1EAF8E]"
           >
-            申请入驻
+            申请加入专委会
             <span className="inline-block ml-1 transition-transform group-hover:translate-x-1">→</span>
           </Link>
           <Link
             href="/about"
             className="px-8 py-3.5 rounded-full text-white/80 font-semibold text-lg border border-white/20 hover:bg-white/5 hover:border-white/40 transition-all duration-300 hover:scale-105"
           >
-            了解社区
+            了解专委会
           </Link>
         </div>
       </div>

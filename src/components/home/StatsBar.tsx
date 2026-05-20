@@ -60,10 +60,10 @@ export default function StatsBar() {
   }, [stats, animated])
 
   const items = [
-    { label: '入驻 OPC', value: counts.opc, suffix: '+' },
-    { label: '累计活动', value: counts.activity, suffix: '场' },
-    { label: '对接资源方', value: counts.partner, suffix: '+' },
-    { label: '触达企业', value: counts.enterprise, suffix: '+' },
+    { label: '专委会委员', value: counts.opc, suffix: '+' },
+    { label: '赋能活动', value: counts.activity, suffix: '场' },
+    { label: '对接生态资源方', value: counts.partner, suffix: '+' },
+    { label: '服务企业', value: counts.enterprise, suffix: '+' },
   ]
 
   return (

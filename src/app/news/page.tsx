@@ -74,10 +74,10 @@ export default function NewsPage() {
       <section className="relative overflow-hidden bg-gradient-to-br from-dark via-slate-900 to-primary/80 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white">
-            资讯
+            专委会动态
           </h1>
           <p className="mt-4 text-lg text-slate-300">
-            了解社区最新动态与行业洞察
+            发布官方通知、会议纪要、行业动态
           </p>
         </div>
       </section>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { SITE_NAME } from '@/lib/constants'
+import { SITE_NAME, ASSOCIATION_SITE } from '@/lib/constants'
 
 export default function Footer() {
   const [logo, setLogo] = useState('/logo.png')
@@ -25,7 +25,7 @@ export default function Footer() {
           <div>
             <Link href="/" className="inline-flex items-center gap-2">
               {logo && logo.startsWith('/') ? (
-                <img src={logo} alt="NB OPC" className="h-8" />
+                <img src={logo} alt="NBOPC" className="h-8" />
               ) : (
                 <span className="text-lg font-bold bg-gradient-to-r from-[#2857A4] to-[#1EAF8E] bg-clip-text text-transparent">
                   {SITE_NAME}
@@ -33,7 +33,10 @@ export default function Footer() {
               )}
             </Link>
             <p className="mt-3 text-sm text-gray-500 leading-relaxed">
-              让每一个 AI 原生创业者，在宁波找到根据地
+              宁波市软件行业协会人工智能专委会官方平台
+            </p>
+            <p className="mt-1.5 text-xs text-gray-600 leading-relaxed">
+              聚焦外贸与制造场景的 AI 应用孵化枢纽
             </p>
           </div>
 
@@ -44,8 +47,8 @@ export default function Footer() {
               {[
                 { label: '首页', href: '/' },
                 { label: '活动', href: '/activities' },
-                { label: 'OPC社区图谱', href: '/communities' },
-                { label: '资源', href: '/resources' },
+                { label: '专委会图谱', href: '/communities' },
+                { label: '赋能资源', href: '/resources' },
               ].map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-sm text-gray-500 hover:text-[#1EAF8E] transition-colors">{link.label}</Link>
@@ -59,14 +62,27 @@ export default function Footer() {
             <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">更多</h3>
             <ul className="space-y-2.5">
               {[
-                { label: '资讯', href: '/news' },
-                { label: '关于我们', href: '/about' },
-                { label: '加入我们', href: '/join' },
+                { label: '专委会动态', href: '/news' },
+                { label: '关于专委会', href: '/about' },
+                { label: '加入专委会', href: '/join' },
               ].map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-sm text-gray-500 hover:text-[#1EAF8E] transition-colors">{link.label}</Link>
                 </li>
               ))}
+              <li>
+                <a
+                  href={ASSOCIATION_SITE.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-[#1EAF8E] transition-colors"
+                >
+                  宁波市软件行业协会官网
+                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                  </svg>
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -83,8 +99,8 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="py-5 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-gray-600">
-            &copy; 2026 NB OPC Community Inc.
+          <p className="text-xs text-gray-600 text-center sm:text-left">
+            &copy; 2026 宁波市软件行业协会人工智能专委会 版权所有 ｜ NBOPC 赋能平台
           </p>
           <div className="flex items-center gap-4 text-xs text-gray-600">
             <Link href="/about" className="hover:text-gray-400 transition-colors">关于</Link>

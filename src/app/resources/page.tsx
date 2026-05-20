@@ -131,10 +131,10 @@ export default function ResourcesPage() {
         />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4 tracking-tight">
-            资源
+            赋能资源
           </h1>
           <p className="text-lg sm:text-xl text-sky-200/80 max-w-2xl mx-auto">
-            助力 OPC 创业者的全方位资源生态
+            突出专委会平台「赋能」定位，为委员与生态伙伴提供全方位资源支撑
           </p>
         </div>
       </section>

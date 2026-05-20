@@ -43,8 +43,8 @@ export default function ProductShowcase() {
       <div ref={sectionRef} className="max-w-6xl mx-auto px-6">
         <div className="reveal flex items-center justify-between mb-10">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">OPC 自研工具</h2>
-            <p className="text-gray-400 mt-2 text-base">来自 NB OPC 成员的 AI 原生产品，每一个都是一个人撑起来的</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">专委会赋能工具库</h2>
+            <p className="text-gray-400 mt-2 text-base">专委会委员与生态伙伴的 AI 应用产品，服务宁波外贸与制造场景</p>
           </div>
           <Link href="/resources" className="text-sm text-[#1EAF8E] hover:underline font-medium hidden sm:flex items-center gap-1">
             查看全部
