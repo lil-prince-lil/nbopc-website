@@ -14,40 +14,24 @@ interface TimelineProps {
 
 const defaultTimelineData: TimelineItem[] = [
   {
-    date: '2023年底',
-    title: '社群萌芽',
-    description:
-      'ChatGPT 掀起 AI 热潮，一场以 AI 为主题的公开聚会成为转折点，点燃了宁波本地 AI 爱好者与创业者的热情。',
+    date: '2024 年 9 月',
+    title: '理事会审议通过',
+    description: '宁波市软件行业协会第七届第一次理事会审议通过，同意成立人工智能专委会。',
   },
   {
-    date: '2024年初',
-    title: '"多个伙伴"AI社群正式起步',
-    description:
-      '创始人李乐源正式创立"多个伙伴"AI社群，聚集了一批对 AI 充满热情的伙伴，开启了从兴趣社群到创业生态的探索之路。',
+    date: '2024 年底',
+    title: '投融资对接活动',
+    description: '举办投融资对接活动，推动社群与行业协会深度结合，OPC 社区走向实体化。',
   },
   {
-    date: '2024年10月',
-    title: '首次品牌线下合作',
-    description:
-      '社群与东钱湖韩岭景区合作举办AI线下展览，首次将 AI 社群的影响力延伸到线下场景与品牌合作。',
+    date: '2025 年',
+    title: '调研走访 OPC 企业',
+    description: '实地走访 40 余家 OPC 企业，形成调研报告并获市委领导批示。',
   },
   {
-    date: '2025年4月',
-    title: '甬派AI众创空间启动',
-    description:
-      '甬派客户端与"多个伙伴"AI社群共同成立甬派AI众创空间，为社群成员提供了首个实体化运营阵地。',
-  },
-  {
-    date: '2025年（全年）',
-    title: '宁波OPC生态持续成长',
-    description:
-      '宁波启动城市级开源社区"NBopen"，OPC 理念在宁波数字经济圈持续发酵，越来越多的一人公司涌现。',
-  },
-  {
-    date: '2026年4月',
-    title: 'NBOPC社区正式成立',
-    description:
-      '宁波OPC社区正式成立，标志着两年多积累正式升级为市级孵化社区，开启 AI OPC 生态建设新篇章。',
+    date: '2026 年 5 月',
+    title: '专委会正式运营',
+    description: '专委会工作条例表决通过，正式实体化运营，NBOPC 赋能平台同步上线。',
   },
 ]
 

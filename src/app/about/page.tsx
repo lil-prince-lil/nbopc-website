@@ -16,16 +16,40 @@ interface TimelineItem {
   description: string
 }
 
-const DEFAULT_INTRO = 'NB OPC 社区，是宁波第一个专为 AI 原生独立创业者（One Person Company）打造的市级孵化社区。\n\n在 AI 技术快速普及的今天，一个人借助 AI 工具，完全有可能独立完成一款产品从 0 到 1 的构建——写代码、做设计、跑运营、接客户。我们相信，「一人公司」不是过渡，而是未来最有活力的创业形态之一。\n\nNB OPC 社区成立于 2026 年，由宁波软件行业协会人工智能应用专委会主管运营。社区聚焦「高频交流 + 资源对接 + 产业落地」三个核心，通过线上线下活动、API 资源补贴、产业客户对接等方式，帮助每一位 AI 原生创业者在宁波找到根据地。\n\n我们的口号是：「让每一个 AI 原生创业者，在宁波找到根据地。」'
-const DEFAULT_MISSION = '孵化 AI Native 创业者，用AI赋能千行百业，推动 AI 项目在宁波真实落地、商业化变现。'
-const DEFAULT_VISION = '成为中国最活跃的城市级 AI OPC 生态社区，让一人公司成为宁波数字经济的新生力量。'
-const DEFAULT_ENDORSEMENT = 'NB OPC 社区受宁波市经信局支持，由宁波软件行业协会人工智能应用专委会主管运营，是宁波市政府认可的市级 AI OPC 官方社区平台。'
+const DEFAULT_INTRO =
+  '宁波市软件行业协会人工智能专委会（简称"AI 专委会"），是宁波市软件行业协会依法设立、直接领导的二级专业委员会，由 NBOPC 赋能平台负责日常运营。\n\n本专委会受宁波市经信局指导，是宁波市政府认可的市级 AI OPC 官方服务平台，以"发现项目、服务项目、培育项目"为核心使命，致力于为宁波 AI 创业群体与企业提供全链路生态赋能，打造宁波 AI 应用产业高质量发展的核心枢纽。\n\n专委会遵循《宁波市软件行业协会章程》《宁波市软件行业协会专业委员会管理办法》，在协会的统一管理下开展工作，重大事项向协会报备，接受协会的指导与监督。依托原 NB OPC 社群积累的产业基础，我们将持续整合资源、对接场景、搭建桥梁，推动宁波 AI OPC 生态的规范化、实体化、规模化发展。'
+const DEFAULT_MISSION = '发现项目、服务项目、培育项目。'
+const DEFAULT_VISION =
+  '打造全市人工智能应用交流平台（全市 AIOPC 生态核心枢纽），服务全市 AI 创业群体，推动宁波人工智能应用产业高质量发展。'
+
+// 官方背书 4 项（结构化展示）
+const ENDORSEMENT_ITEMS = [
+  { label: '主管单位', value: '宁波市软件行业协会' },
+  { label: '指导单位', value: '宁波市经信局' },
+  { label: '认可单位', value: '宁波市政府' },
+  { label: '组织依据', value: '宁波市软件行业协会第七届第一次理事会审议通过成立，2026 年 5 月正式运营' },
+]
+
+// 组织架构 — 主任委员层
+const COMMITTEE_LEADERSHIP = [
+  { title: '主任委员', count: '1 名', note: '协会聘任，主任负责制' },
+  { title: '副主任委员', count: '2 名', note: '主任提名、协会批准' },
+]
+
+// MVP TEAM 六大赋能生态
+const MVP_TEAM = [
+  { letter: 'M', name: '灯塔智库', role: '项目指导顾问', gradient: 'from-amber-500 to-orange-500' },
+  { letter: 'V', name: '价值合伙人', role: '投资服务', gradient: 'from-emerald-500 to-teal-500' },
+  { letter: 'T', name: '护航天团', role: '第三方机构服务', gradient: 'from-blue-500 to-indigo-500' },
+  { letter: 'E', name: '共创引擎', role: '运营服务', gradient: 'from-fuchsia-500 to-pink-500' },
+  { letter: 'A', name: '智能装备库', role: '要素保障', gradient: 'from-cyan-500 to-blue-500' },
+  { letter: 'M', name: '信号塔', role: '媒体资源', gradient: 'from-violet-500 to-purple-600' },
+]
 
 export default function AboutPage() {
   const [intro, setIntro] = useState(DEFAULT_INTRO)
   const [mission, setMission] = useState(DEFAULT_MISSION)
   const [vision, setVision] = useState(DEFAULT_VISION)
-  const [endorsement, setEndorsement] = useState(DEFAULT_ENDORSEMENT)
   const [team, setTeam] = useState<TeamMember[]>([])
   const [timeline, setTimeline] = useState<TimelineItem[]>([])
 
@@ -37,7 +61,6 @@ export default function AboutPage() {
         if (c.about_intro) setIntro(c.about_intro)
         if (c.about_mission) setMission(c.about_mission)
         if (c.about_vision) setVision(c.about_vision)
-        if (c.about_endorsement) setEndorsement(c.about_endorsement)
         try { if (c.about_team) setTeam(JSON.parse(c.about_team)) } catch {}
         try { if (c.about_timeline) setTimeline(JSON.parse(c.about_timeline)) } catch {}
       })
@@ -51,8 +74,10 @@ export default function AboutPage() {
         <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-primary/20 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 right-1/4 w-56 h-56 bg-secondary/20 rounded-full blur-3xl" />
         <div className="relative z-10 text-center px-6">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">关于我们</h1>
-          <p className="text-lg md:text-xl text-slate-300 max-w-xl mx-auto">了解 NB OPC 社区的故事与使命</p>
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">关于专委会</h1>
+          <p className="text-lg md:text-xl text-slate-300 max-w-xl mx-auto">
+            宁波市软件行业协会人工智能专委会官方介绍
+          </p>
         </div>
       </section>
 
@@ -62,9 +87,7 @@ export default function AboutPage() {
           <h2 className="text-3xl font-bold text-white mb-8 text-center">我们是谁</h2>
           <div className="space-y-6 text-gray-300 leading-relaxed text-base md:text-lg">
             {intro.split('\n\n').map((p, i) => (
-              <p key={i} className={p.includes('口号') ? 'text-primary font-semibold text-center text-lg md:text-xl mt-8' : ''}>
-                {p}
-              </p>
+              <p key={i}>{p}</p>
             ))}
           </div>
         </div>
@@ -78,47 +101,128 @@ export default function AboutPage() {
             <div className="relative rounded-2xl p-[2px] bg-gradient-to-br from-primary to-secondary">
               <div className="bg-[#132238] rounded-2xl p-8 h-full">
                 <h3 className="text-xl font-bold text-white mb-4">我们的使命</h3>
-                <p className="text-gray-400 leading-relaxed">{mission}</p>
+                <p className="text-gray-300 leading-relaxed text-lg">{mission}</p>
               </div>
             </div>
             <div className="relative rounded-2xl p-[2px] bg-gradient-to-br from-secondary to-accent">
               <div className="bg-[#132238] rounded-2xl p-8 h-full">
                 <h3 className="text-xl font-bold text-white mb-4">我们的愿景</h3>
-                <p className="text-gray-400 leading-relaxed">{vision}</p>
+                <p className="text-gray-300 leading-relaxed">{vision}</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Endorsement */}
+      {/* Endorsement — 4 项结构化展示 */}
       <section className="py-20 px-6 bg-[#0B1628]">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-white mb-8">官方背书</h2>
-          <p className="text-gray-300 leading-relaxed text-base md:text-lg mb-12 max-w-3xl mx-auto">{endorsement}</p>
-        </div>
-      </section>
-
-      {/* Team */}
-      <section className="py-20 px-6 bg-[#0F1D32]">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-white mb-12 text-center">核心运营团队</h2>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {(team.length > 0 ? team : [{ name: '李乐源', role: '社区发起人/主理人', bio: '专注AI创业生态建设，推动宁波AI产业落地', avatar: '' }]).map((m, i) => (
-              <div key={i} className="bg-[#132238] border border-white/10 rounded-2xl p-8 text-center">
-                {m.avatar ? (
-                  <img src={m.avatar} alt={m.name} className="w-24 h-24 rounded-full mx-auto mb-5 object-cover" />
-                ) : (
-                  <div className="w-24 h-24 rounded-full mx-auto mb-5 bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-2xl font-bold text-white">
-                    {m.name[0]}
+          <h2 className="text-3xl font-bold text-white mb-12 text-center">官方背书</h2>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {ENDORSEMENT_ITEMS.map((item) => (
+              <div
+                key={item.label}
+                className="bg-[#132238] border border-white/10 rounded-2xl p-6 flex gap-4 items-start"
+              >
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/30 to-secondary/30 flex items-center justify-center text-primary shrink-0">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">
+                    {item.label}
                   </div>
-                )}
-                <h3 className="text-lg font-bold text-white mb-1">{m.name}</h3>
-                <p className="text-primary text-sm font-medium mb-3">{m.role}</p>
-                <p className="text-gray-400 text-sm">{m.bio}</p>
+                  <div className="text-base text-gray-100 leading-relaxed">{item.value}</div>
+                </div>
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* 组织架构 — 新增板块 */}
+      <section className="py-20 px-6 bg-[#0F1D32]">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl font-bold text-white mb-4 text-center">组织架构</h2>
+          <p className="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+            采用「主任委员层 + MVP TEAM 横向生态」双层结构，由主任委员层主导决策，MVP TEAM 六大生态横向赋能
+          </p>
+
+          {/* 主任委员层 */}
+          <div className="mb-12">
+            <h3 className="text-lg font-semibold text-white mb-5 flex items-center gap-2.5">
+              <span className="w-1.5 h-6 rounded-full bg-gradient-to-b from-primary to-secondary inline-block" />
+              主任委员层
+            </h3>
+            <div className="grid sm:grid-cols-2 gap-5">
+              {COMMITTEE_LEADERSHIP.map((c) => (
+                <div key={c.title} className="bg-[#132238] border border-white/10 rounded-2xl p-6">
+                  <div className="flex items-baseline gap-3 mb-2">
+                    <h4 className="text-lg font-bold text-white">{c.title}</h4>
+                    <span className="text-sm font-medium text-primary">{c.count}</span>
+                  </div>
+                  <p className="text-sm text-gray-400">{c.note}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* MVP TEAM 六大赋能生态 */}
+          <div>
+            <h3 className="text-lg font-semibold text-white mb-5 flex items-center gap-2.5">
+              <span className="w-1.5 h-6 rounded-full bg-gradient-to-b from-secondary to-accent inline-block" />
+              MVP TEAM 六大赋能生态
+            </h3>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {MVP_TEAM.map((m, i) => (
+                <div
+                  key={`${m.letter}-${i}`}
+                  className="bg-[#132238] border border-white/10 rounded-2xl p-6 hover:border-primary/30 transition-colors"
+                >
+                  <div className="flex items-center gap-4 mb-3">
+                    <div
+                      className={`w-12 h-12 rounded-xl bg-gradient-to-br ${m.gradient} flex items-center justify-center text-white font-bold text-xl shadow-md`}
+                    >
+                      {m.letter}
+                    </div>
+                    <h4 className="text-lg font-bold text-white">{m.name}</h4>
+                  </div>
+                  <p className="text-sm text-gray-400 leading-relaxed">{m.role}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 专委会成员名单 */}
+      <section className="py-20 px-6 bg-[#0B1628]">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl font-bold text-white mb-4 text-center">专委会成员名单</h2>
+          <p className="text-gray-400 text-center mb-12">主任委员、副主任委员及执行秘书处成员</p>
+          {team.length > 0 ? (
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
+              {team.map((m, i) => (
+                <div key={i} className="bg-[#132238] border border-white/10 rounded-2xl p-8 text-center">
+                  {m.avatar ? (
+                    <img src={m.avatar} alt={m.name} className="w-24 h-24 rounded-full mx-auto mb-5 object-cover" />
+                  ) : (
+                    <div className="w-24 h-24 rounded-full mx-auto mb-5 bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-2xl font-bold text-white">
+                      {m.name[0]}
+                    </div>
+                  )}
+                  <h3 className="text-lg font-bold text-white mb-1">{m.name}</h3>
+                  <p className="text-primary text-sm font-medium mb-3">{m.role}</p>
+                  <p className="text-gray-400 text-sm">{m.bio}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center text-gray-400 italic">
+              名单正在筹备中，将在专委会正式公示后更新
+            </div>
+          )}
         </div>
       </section>
 
