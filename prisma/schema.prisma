@@ -147,6 +147,33 @@ model SiteConfig {
   updatedAt DateTime @updatedAt
 }
 
+// 专委会图谱 — OPC 社区
+model Community {
+  id              String   @id @default(cuid())
+  name            String   // 社区名称
+  shortName       String   @default("") // 简称
+  district        String   @default("") // 所属区域：海曙区/高新区/镇海区/江北区/余姚市/北仑区
+  status          String   @default("operating") // operating 已运营 / preparing 筹备中
+  spotlightLabel  String   @default("") // 特色标签文字（如 NBOPC 总部）
+  spotlightColor  String   @default("blue") // 标签配色 gold/sky/cyan/teal/violet/blue/rose/lime/slate/indigo
+  address         String   @default("") // 地址
+  operator        String   @default("") // 运营方
+  launchTime      String   @default("") // 启动时间
+  scale           String   @default("") // 空间规模
+  positioning     String   @default("") // 定位
+  features        String   @default("") // 领域标签，JSON 数组字符串
+  highlights      String   @default("") // 服务特色，JSON 数组字符串
+  policy          String   @default("") // 政策扶持
+  ecosystem       String   @default("") // 合作生态
+  representatives String   @default("") // 代表企业/项目
+  servicePackages String   @default("") // 服务包
+  notes           String   @default("") // 备注
+  order           Int      @default(0) // 排序，数字越小越靠前
+  visible         Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
 // 活动报名
 model ActivitySignup {
   id         String   @id @default(cuid())
