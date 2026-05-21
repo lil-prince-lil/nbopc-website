@@ -60,15 +60,13 @@ export default function Timeline({ items }: TimelineProps) {
   }, [])
 
   return (
-    <section className="py-20 px-6 bg-light">
+    <section className="py-20 px-6 bg-gray-50 border-t border-gray-100">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold text-dark mb-16 text-center">
-          发展历程
-        </h2>
+        <h2 className="text-3xl font-bold text-gray-900 mb-16 text-center">发展历程</h2>
 
         <div className="relative">
           {/* Vertical line */}
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-primary/20 md:-translate-x-px" />
+          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-[#2857A4]/15 md:-translate-x-px" />
 
           <div className="space-y-12">
             {timelineData.map((item, idx) => {
@@ -76,43 +74,32 @@ export default function Timeline({ items }: TimelineProps) {
               return (
                 <div
                   key={idx}
-                  ref={(el) => { itemRefs.current[idx] = el }}
+                  ref={(el) => {
+                    itemRefs.current[idx] = el
+                  }}
                   className="opacity-0 translate-y-8 transition-all duration-700 ease-out"
                 >
-                  {/* Mobile: always left-aligned. Desktop: alternating */}
-                  <div
-                    className={`relative flex items-start gap-6 md:gap-0 ${
-                      isLeft ? 'md:flex-row' : 'md:flex-row-reverse'
-                    }`}
-                  >
+                  <div className={`relative flex items-start gap-6 md:gap-0 ${isLeft ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
                     {/* Dot on mobile */}
                     <div className="relative z-10 flex-shrink-0 md:hidden">
-                      <div className="w-8 h-8 rounded-full bg-primary border-4 border-white shadow-md" />
+                      <div className="w-8 h-8 rounded-full bg-[#FF8C00] border-4 border-gray-50 shadow-sm" />
                     </div>
 
                     {/* Content card */}
-                    <div
-                      className={`flex-1 md:w-[calc(50%-2rem)] ${
-                        isLeft ? 'md:pr-12 md:text-right' : 'md:pl-12 md:text-left'
-                      }`}
-                    >
-                      <span className="inline-block text-sm font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full mb-3">
+                    <div className={`flex-1 md:w-[calc(50%-2rem)] ${isLeft ? 'md:pr-12 md:text-right' : 'md:pl-12 md:text-left'}`}>
+                      <span className="inline-block text-sm font-semibold text-[#2857A4] bg-[#2857A4]/5 border border-[#2857A4]/30 px-3 py-1 rounded-full mb-3">
                         {item.date}
                       </span>
-                      <h3 className="text-lg font-bold text-dark mb-2">
-                        {item.title}
-                      </h3>
-                      <p className="text-gray-600 text-sm leading-relaxed">
-                        {item.description}
-                      </p>
+                      <h3 className="text-lg font-bold text-gray-900 mb-2">{item.title}</h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">{item.description}</p>
                     </div>
 
                     {/* Center dot (desktop only) */}
                     <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 z-10">
-                      <div className="w-4 h-4 rounded-full bg-primary ring-4 ring-white shadow-md" />
+                      <div className="w-4 h-4 rounded-full bg-[#FF8C00] ring-4 ring-gray-50 shadow-sm" />
                     </div>
 
-                    {/* Spacer for opposite side on desktop */}
+                    {/* Spacer */}
                     <div className="hidden md:block md:w-[calc(50%-2rem)]" />
                   </div>
                 </div>

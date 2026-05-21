@@ -20,17 +20,17 @@ function getInitial(name: string): string {
 }
 
 const GRADIENTS = [
-  'from-blue-500 to-purple-600',
-  'from-purple-500 to-pink-500',
+  'from-blue-500 to-indigo-500',
+  'from-violet-500 to-purple-500',
   'from-emerald-500 to-teal-500',
   'from-amber-500 to-orange-500',
-  'from-rose-500 to-red-500',
-  'from-cyan-500 to-blue-500',
-  'from-violet-500 to-indigo-500',
+  'from-rose-500 to-pink-500',
+  'from-cyan-500 to-sky-500',
+  'from-indigo-500 to-blue-500',
   'from-lime-500 to-green-500',
-  'from-fuchsia-500 to-purple-500',
-  'from-sky-500 to-indigo-500',
-  'from-teal-500 to-cyan-500',
+  'from-fuchsia-500 to-pink-500',
+  'from-sky-500 to-blue-500',
+  'from-teal-500 to-emerald-500',
 ]
 
 export default function OpcShowcase() {
@@ -49,19 +49,22 @@ export default function OpcShowcase() {
 
   function scroll(dir: 'left' | 'right') {
     if (!scrollRef.current) return
-    const amount = 300
-    scrollRef.current.scrollBy({ left: dir === 'left' ? -amount : amount, behavior: 'smooth' })
+    scrollRef.current.scrollBy({ left: dir === 'left' ? -300 : 300, behavior: 'smooth' })
   }
 
   return (
-    <section id="opc-showcase" className="py-20 bg-[#0F1D32]">
+    <section id="opc-showcase" className="py-20 bg-white">
       <div ref={sectionRef} className="max-w-6xl mx-auto px-6">
-        <div className="reveal flex items-center justify-between mb-10">
+        <div className="reveal flex items-end justify-between mb-10">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">专委会委员矩阵</h2>
-            <p className="text-gray-400 mt-2 text-base">专委会委员与生态伙伴，共同构建宁波 AI 应用生态</p>
+            <div className="eyebrow mb-3">MEMBERS</div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">专委会委员矩阵</h2>
+            <p className="text-gray-500 mt-2 text-base">专委会委员与生态伙伴，共同构建宁波 AI 应用生态</p>
           </div>
-          <Link href="/atlas" className="text-sm text-[#1EAF8E] hover:underline font-medium hidden sm:flex items-center gap-1">
+          <Link
+            href="/atlas"
+            className="hidden sm:inline-flex items-center gap-1 text-sm font-medium text-[#2857A4] hover:text-[#1E4580] transition-colors shrink-0"
+          >
             查看全部
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -72,33 +75,34 @@ export default function OpcShowcase() {
         {loading ? (
           <div className="flex gap-6 overflow-hidden">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="flex-shrink-0 w-64 rounded-2xl bg-[#132238] border border-white/10 p-6 animate-pulse">
-                <div className="w-20 h-20 rounded-full bg-white/5 mx-auto mb-4" />
-                <div className="h-4 bg-white/5 rounded w-2/3 mx-auto mb-2" />
-                <div className="h-3 bg-white/5 rounded w-1/2 mx-auto" />
+              <div key={i} className="flex-shrink-0 w-64 card-soft p-6 animate-pulse">
+                <div className="w-20 h-20 rounded-full bg-gray-100 mx-auto mb-4" />
+                <div className="h-4 bg-gray-100 rounded w-2/3 mx-auto mb-2" />
+                <div className="h-3 bg-gray-100 rounded w-1/2 mx-auto" />
               </div>
             ))}
           </div>
         ) : members.length === 0 ? (
-          <div className="text-center py-12 text-gray-400">暂无成员</div>
+          <div className="text-center py-12 text-gray-500">暂无成员</div>
         ) : (
           <div className="reveal relative">
-            {/* Nav buttons */}
             <button
+              type="button"
               onClick={() => scroll('left')}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 z-10 w-10 h-10 rounded-full bg-[#1a2d4a] shadow-md flex items-center justify-center hover:bg-[#2d3a4d] transition-colors hidden md:flex"
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 z-10 w-10 h-10 rounded-full bg-white shadow-[0_4px_12px_rgba(0,0,0,0.08)] border border-gray-100 hidden md:flex items-center justify-center hover:border-gray-200 transition-colors"
               aria-label="向左滚动"
             >
-              <svg className="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             <button
+              type="button"
               onClick={() => scroll('right')}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 z-10 w-10 h-10 rounded-full bg-[#1a2d4a] shadow-md flex items-center justify-center hover:bg-[#2d3a4d] transition-colors hidden md:flex"
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 z-10 w-10 h-10 rounded-full bg-white shadow-[0_4px_12px_rgba(0,0,0,0.08)] border border-gray-100 hidden md:flex items-center justify-center hover:border-gray-200 transition-colors"
               aria-label="向右滚动"
             >
-              <svg className="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
@@ -109,41 +113,44 @@ export default function OpcShowcase() {
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
               {members.map((m, i) => (
-                  <Link
-                    key={m.id}
-                    href={`/atlas/${m.id}`}
-                    className="flex-shrink-0 w-64 snap-start rounded-2xl bg-[#132238] border border-white/10 p-6 hover:border-[#1EAF8E]/30 hover:shadow-lg hover:shadow-[#2857A4]/10 transition-all duration-300 hover:-translate-y-1 text-center group"
-                  >
-                    {/* Avatar */}
-                    {m.avatar && m.avatar.startsWith('/') ? (
-                      <img src={m.avatar} alt={m.name} className="w-20 h-20 rounded-full mx-auto mb-4 object-cover shadow-lg ring-2 ring-white/10" />
-                    ) : (
-                      <div className={`w-20 h-20 rounded-full mx-auto mb-4 bg-gradient-to-br ${GRADIENTS[i % GRADIENTS.length]} flex items-center justify-center text-2xl font-bold text-white shadow-lg`}>
-                        {getInitial(m.name)}
-                      </div>
-                    )}
-                    <h3 className="font-semibold text-white text-lg group-hover:text-[#1EAF8E] transition-colors">
-                      {m.name}
-                    </h3>
-                    <p className="mt-1 text-xs text-gray-400 line-clamp-1">
-                      {m.title}
-                    </p>
-                    {m.productName && (
-                      <span className="inline-block mt-2 px-3 py-0.5 rounded-full text-xs font-medium bg-[#2857A4]/10 text-[#2857A4] border border-[#2857A4]/20">
-                        {m.productName}
-                      </span>
-                    )}
-                    <p className="mt-3 text-sm text-gray-500 leading-relaxed line-clamp-2 italic">
-                      &ldquo;{m.quote}&rdquo;
-                    </p>
-                  </Link>
+                <Link
+                  key={m.id}
+                  href={`/atlas/${m.id}`}
+                  className="flex-shrink-0 w-64 snap-start card-soft p-6 text-center group hover:-translate-y-1"
+                >
+                  {m.avatar && m.avatar.startsWith('/') ? (
+                    <img
+                      src={m.avatar}
+                      alt={m.name}
+                      className="w-20 h-20 rounded-full mx-auto mb-4 object-cover shadow-sm ring-2 ring-gray-100"
+                    />
+                  ) : (
+                    <div
+                      className={`w-20 h-20 rounded-full mx-auto mb-4 bg-gradient-to-br ${GRADIENTS[i % GRADIENTS.length]} flex items-center justify-center text-2xl font-bold text-white shadow-sm`}
+                    >
+                      {getInitial(m.name)}
+                    </div>
+                  )}
+                  <h3 className="font-semibold text-gray-900 text-lg group-hover:text-[#2857A4] transition-colors">
+                    {m.name}
+                  </h3>
+                  <p className="mt-1 text-xs text-gray-500 line-clamp-1">{m.title}</p>
+                  {m.productName && (
+                    <span className="inline-block mt-2 px-3 py-0.5 rounded-full text-xs font-medium text-[#FF8C00] bg-[#FF8C00]/5 border border-[#FF8C00]/30">
+                      {m.productName}
+                    </span>
+                  )}
+                  <p className="mt-3 text-sm text-gray-500 leading-relaxed line-clamp-2 italic">
+                    &ldquo;{m.quote}&rdquo;
+                  </p>
+                </Link>
               ))}
             </div>
           </div>
         )}
 
         <div className="text-center mt-8 sm:hidden">
-          <Link href="/atlas" className="text-sm text-[#1EAF8E] hover:underline font-medium">
+          <Link href="/atlas" className="text-sm text-[#2857A4] hover:text-[#1E4580] font-medium">
             查看全部成员 →
           </Link>
         </div>

@@ -13,12 +13,12 @@ interface Article {
   createdAt: string
 }
 
-const GRADIENTS = [
-  'from-blue-400 to-indigo-500',
-  'from-violet-400 to-purple-500',
-  'from-cyan-400 to-blue-500',
-  'from-pink-400 to-rose-500',
-  'from-emerald-400 to-teal-500',
+const GRADIENT_BGS = [
+  'linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%)',
+  'linear-gradient(135deg, #FED7AA 0%, #FDBA74 100%)',
+  'linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 100%)',
+  'linear-gradient(135deg, #FCE7F3 0%, #FBCFE8 100%)',
+  'linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%)',
 ]
 
 type CategoryFilter = '全部' | '资讯' | '行业动态' | '社区公告'
@@ -26,13 +26,13 @@ type CategoryFilter = '全部' | '资讯' | '行业动态' | '社区公告'
 function getCategoryColor(category: string) {
   switch (category) {
     case '社区公告':
-      return 'bg-primary/10 text-primary'
+      return 'bg-[#2857A4]/5 text-[#2857A4] border border-[#2857A4]/30'
     case '行业动态':
-      return 'bg-secondary/10 text-secondary'
+      return 'bg-emerald-50 text-emerald-700 border border-emerald-200'
     case '资讯':
-      return 'bg-accent/10 text-amber-400'
+      return 'bg-[#FF8C00]/5 text-[#FF8C00] border border-[#FF8C00]/30'
     default:
-      return 'bg-white/10 text-gray-400'
+      return 'bg-gray-50 text-gray-500 border border-gray-200'
   }
 }
 
@@ -54,29 +54,25 @@ export default function NewsPage() {
       .finally(() => setLoading(false))
   }, [])
 
-  const filtered =
-    filter === '全部'
-      ? articles
-      : articles.filter((a) => a.category === filter)
-
-  const categories: CategoryFilter[] = [
-    '全部',
-    '资讯',
-    '行业动态',
-    '社区公告',
-  ]
-
+  const filtered = filter === '全部' ? articles : articles.filter((a) => a.category === filter)
+  const categories: CategoryFilter[] = ['全部', '资讯', '行业动态', '社区公告']
   const [featured, ...rest] = filtered
 
   return (
-    <div>
+    <div className="bg-gray-50 min-h-screen">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-dark via-slate-900 to-primary/80 py-20 sm:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white">
-            专委会动态
-          </h1>
-          <p className="mt-4 text-lg text-slate-300">
+      <section className="relative overflow-hidden bg-white border-b border-gray-100 py-16 sm:py-20">
+        <div
+          className="absolute inset-0 opacity-50 pointer-events-none"
+          style={{
+            background:
+              'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(40, 87, 164, 0.06), transparent 70%)',
+          }}
+        />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+          <div className="eyebrow mb-4">NEWS</div>
+          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900">专委会动态</h1>
+          <p className="mt-4 text-lg text-gray-500 max-w-2xl mx-auto">
             发布官方通知、会议纪要、行业动态
           </p>
         </div>
@@ -88,12 +84,9 @@ export default function NewsPage() {
           {categories.map((c) => (
             <button
               key={c}
+              type="button"
               onClick={() => setFilter(c)}
-              className={`px-5 py-2 text-sm font-medium rounded-full transition-colors ${
-                filter === c
-                  ? 'bg-primary text-white shadow-sm'
-                  : 'bg-white/5 text-gray-400 hover:bg-white/10 border border-white/10'
-              }`}
+              className={`chip ${filter === c ? 'chip-active' : ''}`}
             >
               {c}
             </button>
@@ -105,34 +98,34 @@ export default function NewsPage() {
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 pb-20">
         {loading ? (
           <div className="space-y-8">
-            <div className="bg-[#132238] rounded-2xl border border-white/10 overflow-hidden animate-pulse">
+            <div className="card-soft overflow-hidden animate-pulse">
               <div className="md:grid md:grid-cols-2">
-                <div className="h-56 bg-white/5" />
+                <div className="h-56 bg-gray-100" />
                 <div className="p-8 space-y-4">
-                  <div className="h-4 bg-white/5 rounded w-20" />
-                  <div className="h-6 bg-white/5 rounded w-3/4" />
-                  <div className="h-4 bg-white/5 rounded w-full" />
-                  <div className="h-3 bg-white/5 rounded w-1/3" />
+                  <div className="h-4 bg-gray-100 rounded w-20" />
+                  <div className="h-6 bg-gray-100 rounded w-3/4" />
+                  <div className="h-4 bg-gray-100 rounded w-full" />
+                  <div className="h-3 bg-gray-100 rounded w-1/3" />
                 </div>
               </div>
             </div>
           </div>
         ) : filtered.length === 0 ? (
-          <div className="text-center py-20 text-gray-400">暂无相关资讯</div>
+          <div className="text-center py-20 text-gray-500">暂无相关资讯</div>
         ) : (
           <div className="space-y-8">
-            {/* Featured Card */}
+            {/* Featured */}
             {featured && (
               <Link
                 href={`/news/${featured.id}`}
-                className="group block bg-[#132238] rounded-2xl shadow-sm border border-white/10 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+                className="group block card-soft overflow-hidden hover:-translate-y-0.5"
               >
                 <div className="md:grid md:grid-cols-2">
                   <div className="h-56 md:h-full overflow-hidden">
                     {featured.coverImage ? (
                       <img src={featured.coverImage} alt={featured.title} className="w-full h-full object-cover" />
                     ) : (
-                      <div className={`w-full h-full bg-gradient-to-br ${GRADIENTS[0]}`} />
+                      <div className="w-full h-full" style={{ background: GRADIENT_BGS[0] }} />
                     )}
                   </div>
                   <div className="p-6 sm:p-8 flex flex-col justify-center">
@@ -141,15 +134,13 @@ export default function NewsPage() {
                     >
                       {featured.category}
                     </span>
-                    <h2 className="mt-3 text-xl sm:text-2xl font-bold text-white group-hover:text-primary transition-colors">
+                    <h2 className="mt-3 text-xl sm:text-2xl font-bold text-gray-900 group-hover:text-[#2857A4] transition-colors">
                       {featured.title}
                     </h2>
-                    <p className="mt-3 text-gray-400 line-clamp-3">
-                      {featured.summary}
-                    </p>
-                    <div className="mt-4 flex items-center gap-3 text-sm text-gray-400">
+                    <p className="mt-3 text-gray-600 line-clamp-3 leading-relaxed">{featured.summary}</p>
+                    <div className="mt-4 flex items-center gap-3 text-sm text-gray-500">
                       <span>{featured.author}</span>
-                      <span className="w-1 h-1 rounded-full bg-gray-300" />
+                      <span className="w-1 h-1 rounded-full bg-gray-400" />
                       <span>{formatDate(featured.createdAt)}</span>
                     </div>
                   </div>
@@ -163,13 +154,13 @@ export default function NewsPage() {
                 <Link
                   key={article.id}
                   href={`/news/${article.id}`}
-                  className="group flex flex-col sm:flex-row bg-[#132238] rounded-2xl shadow-sm border border-white/10 overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
+                  className="group flex flex-col sm:flex-row card-soft overflow-hidden hover:-translate-y-0.5"
                 >
                   <div className="h-40 sm:h-auto sm:w-56 lg:w-72 shrink-0 overflow-hidden">
                     {article.coverImage ? (
                       <img src={article.coverImage} alt={article.title} className="w-full h-full object-cover" />
                     ) : (
-                      <div className={`w-full h-full bg-gradient-to-br ${GRADIENTS[(i + 1) % GRADIENTS.length]}`} />
+                      <div className="w-full h-full" style={{ background: GRADIENT_BGS[(i + 1) % GRADIENT_BGS.length] }} />
                     )}
                   </div>
                   <div className="p-5 sm:p-6 flex flex-col justify-center">
@@ -178,15 +169,13 @@ export default function NewsPage() {
                     >
                       {article.category}
                     </span>
-                    <h3 className="mt-2 text-lg font-bold text-white group-hover:text-primary transition-colors">
+                    <h3 className="mt-2 text-lg font-semibold text-gray-900 group-hover:text-[#2857A4] transition-colors">
                       {article.title}
                     </h3>
-                    <p className="mt-2 text-sm text-gray-400 line-clamp-2">
-                      {article.summary}
-                    </p>
-                    <div className="mt-3 flex items-center gap-3 text-sm text-gray-400">
+                    <p className="mt-2 text-sm text-gray-600 line-clamp-2 leading-relaxed">{article.summary}</p>
+                    <div className="mt-3 flex items-center gap-3 text-sm text-gray-500">
                       <span>{article.author}</span>
-                      <span className="w-1 h-1 rounded-full bg-gray-300" />
+                      <span className="w-1 h-1 rounded-full bg-gray-400" />
                       <span>{formatDate(article.createdAt)}</span>
                     </div>
                   </div>

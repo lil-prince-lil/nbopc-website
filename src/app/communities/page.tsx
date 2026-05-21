@@ -393,11 +393,11 @@ const STATS = [
 const STATUS_BADGE: Record<Status, { label: string; className: string }> = {
   operating: {
     label: '已运营',
-    className: 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30',
+    className: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
   },
   preparing: {
     label: '筹备中',
-    className: 'bg-amber-500/15 text-amber-300 border border-amber-500/30',
+    className: 'bg-amber-50 text-amber-700 border border-amber-200',
   },
 }
 
@@ -436,54 +436,35 @@ export default function CommunitiesPage() {
   }, [selected])
 
   return (
-    <div className="min-h-screen bg-[#0B1628]">
+    <div className="min-h-screen bg-gray-50">
       {/* Hero */}
-      <section
-        className="relative py-20 sm:py-28 overflow-hidden"
-        style={{
-          background:
-            'linear-gradient(135deg, #0F172A 0%, #1e1b4b 50%, #312e81 100%)',
-        }}
-      >
+      <section className="relative py-16 sm:py-20 overflow-hidden bg-white border-b border-gray-100">
         <div
-          className="absolute inset-0 opacity-10 pointer-events-none"
-          aria-hidden="true"
+          className="absolute inset-0 opacity-60 pointer-events-none"
           style={{
-            backgroundImage:
-              'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
-            backgroundSize: '60px 60px',
+            background:
+              'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(40, 87, 164, 0.06), transparent 70%), radial-gradient(ellipse 40% 30% at 80% 90%, rgba(255, 140, 0, 0.05), transparent 60%)',
           }}
         />
-        <div
-          className="absolute w-72 h-72 rounded-full opacity-20 blur-3xl pointer-events-none"
-          style={{ background: 'radial-gradient(circle, #2857A4, transparent)', top: '10%', right: '20%' }}
-        />
-        <div
-          className="absolute w-56 h-56 rounded-full opacity-15 blur-3xl pointer-events-none"
-          style={{ background: 'radial-gradient(circle, #1EAF8E, transparent)', bottom: '10%', left: '15%' }}
-        />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4 tracking-tight">
-            专委会图谱
-          </h1>
-          <p className="text-lg sm:text-xl text-sky-200/80 max-w-3xl mx-auto leading-relaxed">
+          <div className="eyebrow mb-4">COMMUNITY ATLAS</div>
+          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4 tracking-tight">专委会图谱</h1>
+          <p className="text-lg sm:text-xl text-gray-500 max-w-3xl mx-auto leading-relaxed">
             宁波 AI 原生独立创业者的孵化生态 · 截至 2026 年 5 月
           </p>
-          <p className="mt-4 text-sm text-sky-200/60 max-w-3xl mx-auto leading-relaxed">
+          <p className="mt-4 text-sm text-gray-500 max-w-3xl mx-auto leading-relaxed">
             宁波市计划到 2028 年底打造 10 个以上市级标杆 OPC 社区，全市集聚 OPC 创业者超 1 万人
           </p>
         </div>
       </section>
 
       {/* Stats banner */}
-      <section className="bg-[#0D1A2D] border-y border-white/5">
+      <section className="bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {STATS.map((s) => (
               <div key={s.label} className="text-center">
-                <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#2857A4] to-[#1EAF8E] bg-clip-text text-transparent">
-                  {s.value}
-                </div>
+                <div className="text-2xl md:text-3xl font-bold text-[#2857A4]">{s.value}</div>
                 <div className="mt-1 text-xs sm:text-sm text-gray-500">{s.label}</div>
               </div>
             ))}
@@ -496,34 +477,26 @@ export default function CommunitiesPage() {
         {/* Filters */}
         <div className="space-y-3 mb-8">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs font-medium text-gray-500 mr-2 shrink-0">区域</span>
+            <span className="eyebrow mr-2 shrink-0">区域</span>
             {DISTRICTS.map((d) => (
               <button
                 key={d}
                 type="button"
                 onClick={() => setDistrictFilter(d)}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
-                  districtFilter === d
-                    ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-md shadow-primary/20'
-                    : 'bg-white/5 text-gray-400 hover:bg-white/10 border border-white/10'
-                }`}
+                className={`chip ${districtFilter === d ? 'chip-active' : ''}`}
               >
                 {d}
               </button>
             ))}
           </div>
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs font-medium text-gray-500 mr-2 shrink-0">状态</span>
+            <span className="eyebrow mr-2 shrink-0">状态</span>
             {STATUS_OPTIONS.map((s) => (
               <button
                 key={s.key}
                 type="button"
                 onClick={() => setStatusFilter(s.key)}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
-                  statusFilter === s.key
-                    ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-md shadow-primary/20'
-                    : 'bg-white/5 text-gray-400 hover:bg-white/10 border border-white/10'
-                }`}
+                className={`chip ${statusFilter === s.key ? 'chip-active' : ''}`}
               >
                 {s.label}
               </button>
@@ -533,7 +506,7 @@ export default function CommunitiesPage() {
 
         {/* Card grid */}
         {filtered.length === 0 ? (
-          <div className="text-center py-20 text-gray-400">未找到符合条件的社区</div>
+          <div className="text-center py-20 text-gray-500">未找到符合条件的社区</div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map((c) => (
@@ -541,9 +514,9 @@ export default function CommunitiesPage() {
                 key={c.id}
                 type="button"
                 onClick={() => setSelected(c)}
-                className="group text-left rounded-2xl p-6 bg-[#132238] border border-white/10 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-300"
+                className="group text-left card-soft p-6 hover:-translate-y-1"
               >
-                {/* Spotlight tag (每个社区的核心特色) */}
+                {/* Spotlight tag */}
                 <div className="flex items-center mb-3">
                   <span
                     className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold text-white bg-gradient-to-r ${SPOTLIGHT_GRADIENTS[c.spotlight.color]} shadow-sm`}
@@ -566,40 +539,37 @@ export default function CommunitiesPage() {
                   </span>
                 </div>
 
-                {/* Name */}
-                <h3 className="text-lg font-bold text-white mb-3 leading-tight group-hover:text-primary transition-colors">
+                <h3 className="text-lg font-semibold text-gray-900 mb-3 leading-tight group-hover:text-[#2857A4] transition-colors">
                   {c.name}
                 </h3>
 
-                {/* Meta info */}
-                <div className="space-y-2 text-sm text-gray-400 mb-4">
+                <div className="space-y-2 text-sm text-gray-600 mb-4">
                   {c.operator && (
                     <div className="flex gap-2">
-                      <span className="text-gray-500 shrink-0">运营方</span>
+                      <span className="text-gray-400 shrink-0">运营方</span>
                       <span className="line-clamp-1">{c.operator}</span>
                     </div>
                   )}
                   {c.launchTime && (
                     <div className="flex gap-2">
-                      <span className="text-gray-500 shrink-0">启动时间</span>
+                      <span className="text-gray-400 shrink-0">启动时间</span>
                       <span>{c.launchTime}</span>
                     </div>
                   )}
                   {c.scale && (
                     <div className="flex gap-2">
-                      <span className="text-gray-500 shrink-0">规模</span>
+                      <span className="text-gray-400 shrink-0">规模</span>
                       <span>{c.scale}</span>
                     </div>
                   )}
                 </div>
 
-                {/* Feature tags */}
                 {c.features.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 mb-4">
                     {c.features.slice(0, 4).map((f) => (
                       <span
                         key={f}
-                        className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium text-gray-300 bg-white/5 border border-white/10"
+                        className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium text-gray-700 bg-gray-50 border border-gray-200"
                       >
                         {f}
                       </span>
@@ -607,11 +577,10 @@ export default function CommunitiesPage() {
                   </div>
                 )}
 
-                {/* CTA */}
-                <div className="flex items-center text-xs text-gray-400 group-hover:text-primary transition-colors">
+                <div className="flex items-center text-xs text-[#2857A4] group-hover:text-[#1E4580] transition-colors">
                   <span>查看详情</span>
                   <svg
-                    className="w-3.5 h-3.5 ml-1 transform group-hover:translate-x-1 transition-transform"
+                    className="w-3.5 h-3.5 ml-1 transform group-hover:translate-x-0.5 transition-transform"
                     fill="none"
                     viewBox="0 0 24 24"
                     strokeWidth={2}
@@ -627,33 +596,30 @@ export default function CommunitiesPage() {
       </section>
 
       {/* 市级九大政策 */}
-      <section className="bg-[#0F1D32] py-16 sm:py-20 border-y border-white/5">
+      <section className="bg-white py-16 sm:py-20 border-y border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-10">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 flex items-center gap-3">
-              <span className="w-1.5 h-8 rounded-full bg-gradient-to-b from-primary to-secondary inline-block" />
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 flex items-center gap-3">
+              <span className="w-1.5 h-8 rounded-full bg-[#2857A4] inline-block" />
               市级九大政策支持
             </h2>
-            <p className="text-gray-400 max-w-2xl">
+            <p className="text-gray-500 max-w-2xl">
               宁波市《关于支持人工智能 OPC 创新创业发展的若干意见》围绕 OPC 创新创业全生命周期提供九大核心政策
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {POLICIES.map((p) => (
-              <div
-                key={p.title}
-                className="bg-[#132238] rounded-2xl border border-white/10 p-6 hover:border-primary/30 transition-colors"
-              >
+              <div key={p.title} className="card-soft p-6">
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center text-xl">
+                  <span className="w-10 h-10 rounded-xl bg-[#2857A4]/5 border border-[#2857A4]/20 flex items-center justify-center text-xl">
                     {p.icon}
                   </span>
-                  <h3 className="text-base font-semibold text-white">{p.title}</h3>
+                  <h3 className="text-base font-semibold text-gray-900">{p.title}</h3>
                 </div>
                 <ul className="space-y-2">
                   {p.items.map((item) => (
-                    <li key={item} className="flex gap-2 text-sm text-gray-400 leading-relaxed">
-                      <span className="text-secondary mt-1.5 shrink-0 w-1 h-1 rounded-full bg-secondary inline-block" />
+                    <li key={item} className="flex gap-2 text-sm text-gray-600 leading-relaxed">
+                      <span className="mt-1.5 shrink-0 w-1 h-1 rounded-full bg-[#FF8C00] inline-block" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -665,41 +631,41 @@ export default function CommunitiesPage() {
       </section>
 
       {/* 各区特色政策对比 */}
-      <section className="bg-[#0B1628] py-16 sm:py-20">
+      <section className="bg-gray-50 py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-10">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 flex items-center gap-3">
-              <span className="w-1.5 h-8 rounded-full bg-gradient-to-b from-secondary to-accent inline-block" />
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 flex items-center gap-3">
+              <span className="w-1.5 h-8 rounded-full bg-[#FF8C00] inline-block" />
               各区特色对比
             </h2>
-            <p className="text-gray-400 max-w-2xl">
+            <p className="text-gray-500 max-w-2xl">
               不同区县基于本地资源差异化布局 OPC 社区，形成各具特色的孵化生态
             </p>
           </div>
-          <div className="bg-[#132238] rounded-2xl border border-white/10 overflow-hidden">
+          <div className="card-soft overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
-                <thead className="bg-white/5 text-left">
+                <thead className="bg-gray-50 text-left border-b border-gray-100">
                   <tr>
-                    <th className="px-5 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">区域</th>
-                    <th className="px-5 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">品牌 / 体系</th>
-                    <th className="px-5 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">核心特色</th>
-                    <th className="px-5 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">空间免租</th>
+                    <th className="px-5 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">区域</th>
+                    <th className="px-5 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">品牌 / 体系</th>
+                    <th className="px-5 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">核心特色</th>
+                    <th className="px-5 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">空间免租</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5">
+                <tbody className="divide-y divide-gray-100">
                   {DISTRICT_COMPARISON.map((row) => (
-                    <tr key={row.district} className="hover:bg-white/[0.02] transition-colors">
-                      <td className="px-5 py-4 text-white font-medium whitespace-nowrap">
+                    <tr key={row.district} className="hover:bg-gray-50/50 transition-colors">
+                      <td className="px-5 py-4 whitespace-nowrap">
                         <span
                           className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium text-white bg-gradient-to-br ${DISTRICT_GRADIENT[row.district] || 'from-gray-500 to-gray-600'}`}
                         >
                           {row.district}
                         </span>
                       </td>
-                      <td className="px-5 py-4 text-gray-300">{row.brand}</td>
-                      <td className="px-5 py-4 text-gray-400 leading-relaxed">{row.feature}</td>
-                      <td className="px-5 py-4 text-gray-300 whitespace-nowrap">{row.rentFree}</td>
+                      <td className="px-5 py-4 text-gray-700 font-medium">{row.brand}</td>
+                      <td className="px-5 py-4 text-gray-600 leading-relaxed">{row.feature}</td>
+                      <td className="px-5 py-4 text-gray-700 whitespace-nowrap">{row.rentFree}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -710,25 +676,25 @@ export default function CommunitiesPage() {
       </section>
 
       {/* 数据来源说明 */}
-      <section className="bg-[#0B1628] pb-16">
+      <section className="bg-gray-50 pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-6">
-            <h3 className="text-sm font-semibold text-white mb-3">关于本图谱</h3>
-            <ul className="text-sm text-gray-400 leading-relaxed space-y-2">
+          <div className="card-soft p-6">
+            <h3 className="text-sm font-semibold text-gray-900 mb-3">关于本图谱</h3>
+            <ul className="text-sm text-gray-600 leading-relaxed space-y-2">
               <li>
-                <span className="text-gray-500">·</span> 宁波 OPC 社区生态正在快速扩展中，目前已有 10 余个社区运营、超 30 个项目筹备，信息可能随时更新
+                <span className="text-gray-400">·</span> 宁波 OPC 社区生态正在快速扩展中，目前已有 10 余个社区运营、超 30 个项目筹备，信息可能随时更新
               </li>
               <li>
-                <span className="text-gray-500">·</span> 部分社区（尤其海曙区老城区点位）利用的是分散的存量闲置空间，并非集中固定园区，精确门牌号建议联系各街道了解
+                <span className="text-gray-400">·</span> 部分社区（尤其海曙区老城区点位）利用的是分散的存量闲置空间，并非集中固定园区，精确门牌号建议联系各街道了解
               </li>
               <li>
-                <span className="text-gray-500">·</span> 多数社区采用"项目申报 → 路演评审 → 工位分配"流程，建议关注各区官方公众号或通过 OPC 圈（opcquan.com）等平台获取最新入驻信息
+                <span className="text-gray-400">·</span> 多数社区采用"项目申报 → 路演评审 → 工位分配"流程，建议关注各区官方公众号或通过 OPC 圈（opcquan.com）等平台获取最新入驻信息
               </li>
               <li>
-                <span className="text-gray-500">·</span> 2026 年下半年预计将有更多社区正式亮相，本页面会持续更新
+                <span className="text-gray-400">·</span> 2026 年下半年预计将有更多社区正式亮相，本页面会持续更新
               </li>
             </ul>
-            <p className="mt-4 text-xs text-gray-600">
+            <p className="mt-4 text-xs text-gray-500">
               数据来源：浙江日报、央广网、中国经营报、宁波市政府公开文件、新华网等公开报道，截至 2026 年 5 月初
             </p>
           </div>
@@ -741,16 +707,15 @@ export default function CommunitiesPage() {
           className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
           onClick={() => setSelected(null)}
         >
-          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-gray-900/40 backdrop-blur-sm" />
           <div
-            className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto bg-[#132238] border border-white/10 rounded-2xl shadow-2xl"
+            className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto bg-white border border-gray-100 rounded-2xl shadow-[0_24px_60px_rgba(0,0,0,0.15)]"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* close */}
             <button
               type="button"
               onClick={() => setSelected(null)}
-              className="absolute top-4 right-4 z-10 w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-colors flex items-center justify-center"
+              className="absolute top-4 right-4 z-10 w-8 h-8 rounded-lg bg-white/80 backdrop-blur-sm hover:bg-white text-gray-600 hover:text-gray-900 transition-colors flex items-center justify-center shadow-sm"
               aria-label="关闭"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
@@ -762,7 +727,6 @@ export default function CommunitiesPage() {
             <div
               className={`relative h-24 bg-gradient-to-br ${DISTRICT_GRADIENT[selected.district] || 'from-gray-500 to-gray-600'}`}
             >
-              <div className="absolute inset-0 bg-[#132238]/30" />
               <div className="absolute bottom-3 left-6 flex items-center gap-2 flex-wrap">
                 <span
                   className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold text-white bg-gradient-to-r ${SPOTLIGHT_GRADIENTS[selected.spotlight.color]} shadow-md`}
@@ -781,51 +745,49 @@ export default function CommunitiesPage() {
             </div>
 
             <div className="p-6 sm:p-8">
-              <h3 className="text-xl sm:text-2xl font-bold text-white mb-5">{selected.name}</h3>
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-5">{selected.name}</h3>
 
-              {/* Meta grid */}
               <dl className="grid sm:grid-cols-2 gap-4 mb-6">
                 {selected.operator && (
                   <div>
-                    <dt className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">运营方</dt>
-                    <dd className="text-sm text-gray-200">{selected.operator}</dd>
+                    <dt className="eyebrow mb-1">运营方</dt>
+                    <dd className="text-sm text-gray-700">{selected.operator}</dd>
                   </div>
                 )}
                 {selected.launchTime && (
                   <div>
-                    <dt className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">启动时间</dt>
-                    <dd className="text-sm text-gray-200">{selected.launchTime}</dd>
+                    <dt className="eyebrow mb-1">启动时间</dt>
+                    <dd className="text-sm text-gray-700">{selected.launchTime}</dd>
                   </div>
                 )}
                 {selected.address && (
                   <div className="sm:col-span-2">
-                    <dt className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">地址</dt>
-                    <dd className="text-sm text-gray-200">{selected.address}</dd>
+                    <dt className="eyebrow mb-1">地址</dt>
+                    <dd className="text-sm text-gray-700">{selected.address}</dd>
                   </div>
                 )}
                 {selected.scale && (
                   <div>
-                    <dt className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">空间规模</dt>
-                    <dd className="text-sm text-gray-200">{selected.scale}</dd>
+                    <dt className="eyebrow mb-1">空间规模</dt>
+                    <dd className="text-sm text-gray-700">{selected.scale}</dd>
                   </div>
                 )}
                 {selected.positioning && (
                   <div className="sm:col-span-2">
-                    <dt className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">定位</dt>
-                    <dd className="text-sm text-gray-200">{selected.positioning}</dd>
+                    <dt className="eyebrow mb-1">定位</dt>
+                    <dd className="text-sm text-gray-700">{selected.positioning}</dd>
                   </div>
                 )}
               </dl>
 
-              {/* Tags */}
               {selected.features.length > 0 && (
                 <div className="mb-6">
-                  <div className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">领域 / 标签</div>
+                  <div className="eyebrow mb-2">领域 / 标签</div>
                   <div className="flex flex-wrap gap-1.5">
                     {selected.features.map((f) => (
                       <span
                         key={f}
-                        className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium text-primary bg-primary/10 border border-primary/20"
+                        className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium text-[#2857A4] bg-[#2857A4]/5 border border-[#2857A4]/30"
                       >
                         {f}
                       </span>
@@ -834,14 +796,13 @@ export default function CommunitiesPage() {
                 </div>
               )}
 
-              {/* Highlights */}
               {selected.highlights.length > 0 && (
                 <div className="mb-6">
-                  <div className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">服务特色</div>
+                  <div className="eyebrow mb-2">服务特色</div>
                   <ul className="space-y-2">
                     {selected.highlights.map((h) => (
-                      <li key={h} className="flex gap-2 text-sm text-gray-300 leading-relaxed">
-                        <span className="text-secondary mt-1.5 shrink-0 w-1 h-1 rounded-full bg-secondary inline-block" />
+                      <li key={h} className="flex gap-2 text-sm text-gray-700 leading-relaxed">
+                        <span className="mt-1.5 shrink-0 w-1 h-1 rounded-full bg-[#FF8C00] inline-block" />
                         <span>{h}</span>
                       </li>
                     ))}
@@ -849,22 +810,11 @@ export default function CommunitiesPage() {
                 </div>
               )}
 
-              {/* Other detail blocks */}
-              {selected.ecosystem && (
-                <DetailBlock label="合作生态" value={selected.ecosystem} />
-              )}
-              {selected.servicePackages && (
-                <DetailBlock label="服务包" value={selected.servicePackages} />
-              )}
-              {selected.representatives && (
-                <DetailBlock label="代表企业 / 项目" value={selected.representatives} />
-              )}
-              {selected.policy && (
-                <DetailBlock label="政策扶持" value={selected.policy} />
-              )}
-              {selected.notes && (
-                <DetailBlock label="备注" value={selected.notes} />
-              )}
+              {selected.ecosystem && <DetailBlock label="合作生态" value={selected.ecosystem} />}
+              {selected.servicePackages && <DetailBlock label="服务包" value={selected.servicePackages} />}
+              {selected.representatives && <DetailBlock label="代表企业 / 项目" value={selected.representatives} />}
+              {selected.policy && <DetailBlock label="政策扶持" value={selected.policy} />}
+              {selected.notes && <DetailBlock label="备注" value={selected.notes} />}
             </div>
           </div>
         </div>
@@ -876,8 +826,8 @@ export default function CommunitiesPage() {
 function DetailBlock({ label, value }: { label: string; value: string }) {
   return (
     <div className="mb-5">
-      <div className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1.5">{label}</div>
-      <p className="text-sm text-gray-300 leading-relaxed">{value}</p>
+      <div className="eyebrow mb-1.5">{label}</div>
+      <p className="text-sm text-gray-700 leading-relaxed">{value}</p>
     </div>
   )
 }

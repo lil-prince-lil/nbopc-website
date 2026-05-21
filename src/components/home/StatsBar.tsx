@@ -67,38 +67,23 @@ export default function StatsBar() {
   ]
 
   return (
-    <section id="stats" className="relative py-10 bg-[#0D1A2D]">
-      {/* Decorative curve */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#1EAF8E]/30 to-transparent" />
-      <svg className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[60px] opacity-20" viewBox="0 0 600 60" fill="none">
-        <path d="M0 60 Q150 0 300 30 Q450 60 600 0" stroke="url(#curveGrad)" strokeWidth="1.5" fill="none"/>
-        <defs>
-          <linearGradient id="curveGrad" x1="0" y1="0" x2="600" y2="0">
-            <stop offset="0%" stopColor="#2857A4" stopOpacity="0"/>
-            <stop offset="50%" stopColor="#1EAF8E"/>
-            <stop offset="100%" stopColor="#2857A4" stopOpacity="0"/>
-          </linearGradient>
-        </defs>
-      </svg>
-
+    <section id="stats" className="relative py-10 bg-white border-y border-gray-100">
       <div ref={sectionRef} className="max-w-6xl mx-auto px-6">
         <div ref={countRef} className="reveal flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-          <h3 className="text-lg font-semibold text-white/60 tracking-wide shrink-0">
-            数据活跃度
-          </h3>
-          <div className="flex flex-wrap items-center gap-8 md:gap-12">
+          <h3 className="eyebrow shrink-0">数据活跃度</h3>
+          <div className="grid grid-cols-2 md:flex md:flex-wrap items-center gap-8 md:gap-12">
             {items.map((item) => (
-              <div key={item.label} className="flex items-baseline gap-2">
-                <span className="text-sm text-gray-500">{item.label}</span>
-                <span className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#2857A4] to-[#1EAF8E] bg-clip-text text-transparent">
-                  {item.value.toLocaleString()}{item.suffix}
+              <div key={item.label} className="flex flex-col gap-1">
+                <span className="text-2xl md:text-3xl font-bold text-[#2857A4]">
+                  {item.value.toLocaleString()}
+                  <span className="text-[#FF8C00]">{item.suffix}</span>
                 </span>
+                <span className="text-xs text-gray-500">{item.label}</span>
               </div>
             ))}
           </div>
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/5 to-transparent" />
     </section>
   )
 }

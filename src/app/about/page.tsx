@@ -22,7 +22,6 @@ const DEFAULT_MISSION = '发现项目、服务项目、培育项目。'
 const DEFAULT_VISION =
   '打造全市人工智能应用交流平台（全市 AIOPC 生态核心枢纽），服务全市 AI 创业群体，推动宁波人工智能应用产业高质量发展。'
 
-// 官方背书 4 项（结构化展示）
 const ENDORSEMENT_ITEMS = [
   { label: '主管单位', value: '宁波市软件行业协会' },
   { label: '指导单位', value: '宁波市经信局' },
@@ -30,20 +29,18 @@ const ENDORSEMENT_ITEMS = [
   { label: '组织依据', value: '宁波市软件行业协会第七届第一次理事会审议通过成立，2026 年 5 月正式运营' },
 ]
 
-// 组织架构 — 主任委员层
 const COMMITTEE_LEADERSHIP = [
   { title: '主任委员', count: '1 名', note: '协会聘任，主任负责制' },
   { title: '副主任委员', count: '2 名', note: '主任提名、协会批准' },
 ]
 
-// MVP TEAM 六大赋能生态
 const MVP_TEAM = [
   { letter: 'M', name: '灯塔智库', role: '项目指导顾问', gradient: 'from-amber-500 to-orange-500' },
   { letter: 'V', name: '价值合伙人', role: '投资服务', gradient: 'from-emerald-500 to-teal-500' },
   { letter: 'T', name: '护航天团', role: '第三方机构服务', gradient: 'from-blue-500 to-indigo-500' },
   { letter: 'E', name: '共创引擎', role: '运营服务', gradient: 'from-fuchsia-500 to-pink-500' },
   { letter: 'A', name: '智能装备库', role: '要素保障', gradient: 'from-cyan-500 to-blue-500' },
-  { letter: 'M', name: '信号塔', role: '媒体资源', gradient: 'from-violet-500 to-purple-600' },
+  { letter: 'M', name: '信号塔', role: '媒体资源', gradient: 'from-violet-500 to-purple-500' },
 ]
 
 export default function AboutPage() {
@@ -55,14 +52,18 @@ export default function AboutPage() {
 
   useEffect(() => {
     fetch('/api/public/config')
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         const c = data.data || {}
         if (c.about_intro) setIntro(c.about_intro)
         if (c.about_mission) setMission(c.about_mission)
         if (c.about_vision) setVision(c.about_vision)
-        try { if (c.about_team) setTeam(JSON.parse(c.about_team)) } catch {}
-        try { if (c.about_timeline) setTimeline(JSON.parse(c.about_timeline)) } catch {}
+        try {
+          if (c.about_team) setTeam(JSON.parse(c.about_team))
+        } catch {}
+        try {
+          if (c.about_timeline) setTimeline(JSON.parse(c.about_timeline))
+        } catch {}
       })
       .catch(() => {})
   }, [])
@@ -70,22 +71,28 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative flex items-center justify-center h-[40vh] min-h-[320px] bg-gradient-to-br from-dark via-slate-900 to-primary/80 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-primary/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-56 h-56 bg-secondary/20 rounded-full blur-3xl" />
+      <section className="relative flex items-center justify-center h-[40vh] min-h-[320px] bg-white border-b border-gray-100 overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-60 pointer-events-none"
+          style={{
+            background:
+              'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(40, 87, 164, 0.06), transparent 70%), radial-gradient(ellipse 40% 30% at 80% 90%, rgba(255, 140, 0, 0.05), transparent 60%)',
+          }}
+        />
         <div className="relative z-10 text-center px-6">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">关于专委会</h1>
-          <p className="text-lg md:text-xl text-slate-300 max-w-xl mx-auto">
+          <div className="eyebrow mb-4">ABOUT</div>
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">关于专委会</h1>
+          <p className="text-lg md:text-xl text-gray-500 max-w-xl mx-auto">
             宁波市软件行业协会人工智能专委会官方介绍
           </p>
         </div>
       </section>
 
       {/* Intro */}
-      <section className="py-20 px-6 bg-[#0B1628]">
+      <section className="py-20 px-6 bg-white">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold text-white mb-8 text-center">我们是谁</h2>
-          <div className="space-y-6 text-gray-300 leading-relaxed text-base md:text-lg">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">我们是谁</h2>
+          <div className="space-y-6 text-gray-700 leading-relaxed text-base md:text-lg">
             {intro.split('\n\n').map((p, i) => (
               <p key={i}>{p}</p>
             ))}
@@ -94,46 +101,48 @@ export default function AboutPage() {
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-20 px-6 bg-[#0F1D32]">
+      <section className="py-20 px-6 bg-gray-50 border-y border-gray-100">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-white mb-12 text-center">使命与愿景</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">使命与愿景</h2>
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="relative rounded-2xl p-[2px] bg-gradient-to-br from-primary to-secondary">
-              <div className="bg-[#132238] rounded-2xl p-8 h-full">
-                <h3 className="text-xl font-bold text-white mb-4">我们的使命</h3>
-                <p className="text-gray-300 leading-relaxed text-lg">{mission}</p>
+            <div className="card-soft p-8">
+              <div className="w-10 h-10 rounded-xl bg-[#2857A4]/5 border border-[#2857A4]/20 flex items-center justify-center mb-5">
+                <svg className="w-5 h-5 text-[#2857A4]" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 1 0-9-9h9V3a9 9 0 0 1 9 9h-9" />
+                </svg>
               </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">我们的使命</h3>
+              <p className="text-gray-600 leading-relaxed text-lg">{mission}</p>
             </div>
-            <div className="relative rounded-2xl p-[2px] bg-gradient-to-br from-secondary to-accent">
-              <div className="bg-[#132238] rounded-2xl p-8 h-full">
-                <h3 className="text-xl font-bold text-white mb-4">我们的愿景</h3>
-                <p className="text-gray-300 leading-relaxed">{vision}</p>
+            <div className="card-soft p-8">
+              <div className="w-10 h-10 rounded-xl bg-[#FF8C00]/5 border border-[#FF8C00]/20 flex items-center justify-center mb-5">
+                <svg className="w-5 h-5 text-[#FF8C00]" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                </svg>
               </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">我们的愿景</h3>
+              <p className="text-gray-600 leading-relaxed">{vision}</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Endorsement — 4 项结构化展示 */}
-      <section className="py-20 px-6 bg-[#0B1628]">
+      {/* Endorsement — 4 structured items */}
+      <section className="py-20 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-white mb-12 text-center">官方背书</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">官方背书</h2>
           <div className="grid sm:grid-cols-2 gap-4">
             {ENDORSEMENT_ITEMS.map((item) => (
-              <div
-                key={item.label}
-                className="bg-[#132238] border border-white/10 rounded-2xl p-6 flex gap-4 items-start"
-              >
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/30 to-secondary/30 flex items-center justify-center text-primary shrink-0">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+              <div key={item.label} className="card-soft p-6 flex gap-4 items-start">
+                <div className="w-10 h-10 rounded-xl bg-[#2857A4]/5 border border-[#2857A4]/20 flex items-center justify-center text-[#2857A4] shrink-0">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                   </svg>
                 </div>
                 <div>
-                  <div className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">
-                    {item.label}
-                  </div>
-                  <div className="text-base text-gray-100 leading-relaxed">{item.value}</div>
+                  <div className="eyebrow mb-1">{item.label}</div>
+                  <div className="text-base text-gray-900 leading-relaxed">{item.value}</div>
                 </div>
               </div>
             ))}
@@ -141,54 +150,51 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 组织架构 — 新增板块 */}
-      <section className="py-20 px-6 bg-[#0F1D32]">
+      {/* 组织架构 */}
+      <section className="py-20 px-6 bg-gray-50 border-y border-gray-100">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-white mb-4 text-center">组织架构</h2>
-          <p className="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center">组织架构</h2>
+          <p className="text-gray-500 text-center mb-12 max-w-2xl mx-auto">
             采用「主任委员层 + MVP TEAM 横向生态」双层结构，由主任委员层主导决策，MVP TEAM 六大生态横向赋能
           </p>
 
           {/* 主任委员层 */}
           <div className="mb-12">
-            <h3 className="text-lg font-semibold text-white mb-5 flex items-center gap-2.5">
-              <span className="w-1.5 h-6 rounded-full bg-gradient-to-b from-primary to-secondary inline-block" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-5 flex items-center gap-2.5">
+              <span className="w-1.5 h-6 rounded-full bg-[#2857A4] inline-block" />
               主任委员层
             </h3>
             <div className="grid sm:grid-cols-2 gap-5">
               {COMMITTEE_LEADERSHIP.map((c) => (
-                <div key={c.title} className="bg-[#132238] border border-white/10 rounded-2xl p-6">
+                <div key={c.title} className="card-soft p-6">
                   <div className="flex items-baseline gap-3 mb-2">
-                    <h4 className="text-lg font-bold text-white">{c.title}</h4>
-                    <span className="text-sm font-medium text-primary">{c.count}</span>
+                    <h4 className="text-lg font-bold text-gray-900">{c.title}</h4>
+                    <span className="text-sm font-medium text-[#2857A4]">{c.count}</span>
                   </div>
-                  <p className="text-sm text-gray-400">{c.note}</p>
+                  <p className="text-sm text-gray-500">{c.note}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* MVP TEAM 六大赋能生态 */}
+          {/* MVP TEAM */}
           <div>
-            <h3 className="text-lg font-semibold text-white mb-5 flex items-center gap-2.5">
-              <span className="w-1.5 h-6 rounded-full bg-gradient-to-b from-secondary to-accent inline-block" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-5 flex items-center gap-2.5">
+              <span className="w-1.5 h-6 rounded-full bg-[#FF8C00] inline-block" />
               MVP TEAM 六大赋能生态
             </h3>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {MVP_TEAM.map((m, i) => (
-                <div
-                  key={`${m.letter}-${i}`}
-                  className="bg-[#132238] border border-white/10 rounded-2xl p-6 hover:border-primary/30 transition-colors"
-                >
+                <div key={`${m.letter}-${i}`} className="card-soft p-6">
                   <div className="flex items-center gap-4 mb-3">
                     <div
-                      className={`w-12 h-12 rounded-xl bg-gradient-to-br ${m.gradient} flex items-center justify-center text-white font-bold text-xl shadow-md`}
+                      className={`w-12 h-12 rounded-xl bg-gradient-to-br ${m.gradient} flex items-center justify-center text-white font-bold text-xl shadow-sm`}
                     >
                       {m.letter}
                     </div>
-                    <h4 className="text-lg font-bold text-white">{m.name}</h4>
+                    <h4 className="text-lg font-bold text-gray-900">{m.name}</h4>
                   </div>
-                  <p className="text-sm text-gray-400 leading-relaxed">{m.role}</p>
+                  <p className="text-sm text-gray-500 leading-relaxed">{m.role}</p>
                 </div>
               ))}
             </div>
@@ -197,31 +203,33 @@ export default function AboutPage() {
       </section>
 
       {/* 专委会成员名单 */}
-      <section className="py-20 px-6 bg-[#0B1628]">
+      <section className="py-20 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-white mb-4 text-center">专委会成员名单</h2>
-          <p className="text-gray-400 text-center mb-12">主任委员、副主任委员及执行秘书处成员</p>
+          <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center">专委会成员名单</h2>
+          <p className="text-gray-500 text-center mb-12">主任委员、副主任委员及执行秘书处成员</p>
           {team.length > 0 ? (
             <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
               {team.map((m, i) => (
-                <div key={i} className="bg-[#132238] border border-white/10 rounded-2xl p-8 text-center">
+                <div key={i} className="card-soft p-8 text-center">
                   {m.avatar ? (
-                    <img src={m.avatar} alt={m.name} className="w-24 h-24 rounded-full mx-auto mb-5 object-cover" />
+                    <img
+                      src={m.avatar}
+                      alt={m.name}
+                      className="w-24 h-24 rounded-full mx-auto mb-5 object-cover ring-2 ring-gray-100"
+                    />
                   ) : (
-                    <div className="w-24 h-24 rounded-full mx-auto mb-5 bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-2xl font-bold text-white">
+                    <div className="w-24 h-24 rounded-full mx-auto mb-5 bg-[#2857A4] flex items-center justify-center text-2xl font-bold text-white">
                       {m.name[0]}
                     </div>
                   )}
-                  <h3 className="text-lg font-bold text-white mb-1">{m.name}</h3>
-                  <p className="text-primary text-sm font-medium mb-3">{m.role}</p>
-                  <p className="text-gray-400 text-sm">{m.bio}</p>
+                  <h3 className="text-lg font-bold text-gray-900 mb-1">{m.name}</h3>
+                  <p className="text-[#2857A4] text-sm font-medium mb-3">{m.role}</p>
+                  <p className="text-gray-500 text-sm">{m.bio}</p>
                 </div>
               ))}
             </div>
           ) : (
-            <div className="text-center text-gray-400 italic">
-              名单正在筹备中，将在专委会正式公示后更新
-            </div>
+            <div className="text-center text-gray-500 italic">名单正在筹备中，将在专委会正式公示后更新</div>
           )}
         </div>
       </section>

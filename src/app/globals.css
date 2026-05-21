@@ -1,12 +1,24 @@
 @import "tailwindcss";
 
+/*
+  Clean UI 设计语言（参考 Apple / Stripe）
+  · 底色：极浅灰 #F9FAFB
+  · 卡片：纯白 #FFFFFF
+  · 文本：text-gray-900 (#111827) / text-gray-500 (#6B7280)
+  · 边框：border-gray-100 / border-gray-200
+  · 主色 A：品牌蓝 #2857A4（选中/链接/图标激活）→ 70% 使用面积
+  · 主色 B：活力橙 #FF8C00（徽标/Badge/通知点/标签）→ 30% 使用面积
+*/
+
 @theme inline {
   --color-primary: #2857A4;
-  --color-secondary: #1EAF8E;
-  --color-accent: #1EAF8E;
-  --color-dark: #0F172A;
-  --color-light: #F8FAFC;
-  --font-sans: "Noto Sans SC Variable", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+  --color-primary-dark: #1E4580;
+  --color-accent: #FF8C00;
+  --color-accent-dark: #E07B00;
+  --color-secondary: #1EAF8E; /* 保留作为辅助绿 */
+  --color-dark: #111827;
+  --color-light: #F9FAFB;
+  --font-sans: "Inter", "Noto Sans SC Variable", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
 }
 
 html {
@@ -17,47 +29,131 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #0B1628;
-  color: #e2e8f0;
+  background: #F9FAFB;
+  color: #111827;
 }
 
+/* 浅色滚动条 */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
+  height: 8px;
 }
-
 ::-webkit-scrollbar-track {
   background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
-  background: #1a2d4a;
-  border-radius: 3px;
+  background: #E5E7EB;
+  border-radius: 4px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: #2a4060;
+  background: #D1D5DB;
 }
 
-/* Noise texture overlay for depth */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.015;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-}
-
-/* Smooth page transitions */
+/* 平滑页面切换 */
 main {
   animation: fadeIn 0.3s ease-out;
 }
-
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* 通用工具类 — Clean UI 风格 */
+.card-soft {
+  background: #ffffff;
+  border: 1px solid #F3F4F6;
+  border-radius: 1rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 200ms ease, border-color 200ms ease, transform 200ms ease;
+}
+.card-soft:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+  border-color: #E5E7EB;
+}
+
+.btn-primary {
+  background-color: #2857A4;
+  color: #ffffff;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 200ms ease;
+  box-shadow: 0 1px 2px rgba(40, 87, 164, 0.1);
+}
+.btn-primary:hover {
+  background-color: #1E4580;
+  box-shadow: 0 4px 12px rgba(40, 87, 164, 0.2);
+}
+
+.btn-accent {
+  background-color: #FF8C00;
+  color: #ffffff;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 200ms ease;
+  box-shadow: 0 1px 2px rgba(255, 140, 0, 0.1);
+}
+.btn-accent:hover {
+  background-color: #E07B00;
+  box-shadow: 0 4px 12px rgba(255, 140, 0, 0.25);
+}
+
+.btn-secondary {
+  background-color: #ffffff;
+  color: #374151;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  border: 1px solid #E5E7EB;
+  transition: all 200ms ease;
+}
+.btn-secondary:hover {
+  background-color: #F9FAFB;
+  border-color: #D1D5DB;
+}
+
+/* 章节小标题（极小、全大写、宽字间距） */
+.eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #6B7280;
+}
+
+/* Chip / Filter */
+.chip {
+  padding: 0.375rem 0.875rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background-color: #ffffff;
+  color: #6B7280;
+  border: 1px solid #E5E7EB;
+  transition: all 200ms ease;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.chip:hover {
+  border-color: #D1D5DB;
+  color: #374151;
+}
+.chip-active {
+  background-color: rgba(40, 87, 164, 0.05);
+  color: #2857A4;
+  border-color: #2857A4;
+  box-shadow: 0 0 0 4px rgba(40, 87, 164, 0.08);
+}
+
+/* 链接 */
+.link-primary {
+  color: #2857A4;
+  transition: color 200ms ease;
+}
+.link-primary:hover {
+  color: #1E4580;
 }

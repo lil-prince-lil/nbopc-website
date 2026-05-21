@@ -15,24 +15,24 @@ interface Article {
   createdAt: string
 }
 
-const GRADIENTS = [
-  'from-blue-400 to-indigo-500',
-  'from-violet-400 to-purple-500',
-  'from-cyan-400 to-blue-500',
-  'from-pink-400 to-rose-500',
-  'from-emerald-400 to-teal-500',
+const GRADIENT_BGS = [
+  'linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%)',
+  'linear-gradient(135deg, #FED7AA 0%, #FDBA74 100%)',
+  'linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 100%)',
+  'linear-gradient(135deg, #FCE7F3 0%, #FBCFE8 100%)',
+  'linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%)',
 ]
 
 function getCategoryColor(category: string) {
   switch (category) {
     case '社区公告':
-      return 'bg-primary/10 text-primary'
+      return 'bg-[#2857A4]/5 text-[#2857A4] border border-[#2857A4]/30'
     case '行业动态':
-      return 'bg-secondary/10 text-secondary'
+      return 'bg-emerald-50 text-emerald-700 border border-emerald-200'
     case '资讯':
-      return 'bg-accent/10 text-amber-400'
+      return 'bg-[#FF8C00]/5 text-[#FF8C00] border border-[#FF8C00]/30'
     default:
-      return 'bg-white/10 text-gray-400'
+      return 'bg-gray-50 text-gray-500 border border-gray-200'
   }
 }
 
@@ -62,7 +62,7 @@ export default function NewsDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center">
+      <div className="min-h-[60vh] flex items-center justify-center bg-gray-50">
         <div className="w-8 h-8 border-2 border-[#2857A4] border-t-transparent rounded-full animate-spin" />
       </div>
     )
@@ -70,73 +70,58 @@ export default function NewsDetailPage() {
 
   if (notFound || !article) {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center text-gray-400">
+      <div className="min-h-[60vh] flex items-center justify-center text-gray-500 bg-gray-50">
         文章未找到
       </div>
     )
   }
 
-  const gradient = GRADIENTS[Math.abs(article.title.length) % GRADIENTS.length]
+  const bg = GRADIENT_BGS[Math.abs(article.title.length) % GRADIENT_BGS.length]
 
   return (
-    <div>
-      {/* Article Header */}
+    <div className="bg-gray-50 min-h-screen">
       <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 pt-10 sm:pt-16">
-        <span
-          className={`inline-block text-xs font-semibold px-3 py-1 rounded-full ${getCategoryColor(article.category)}`}
-        >
+        <span className={`inline-block text-xs font-semibold px-3 py-1 rounded-full ${getCategoryColor(article.category)}`}>
           {article.category}
         </span>
-        <h1 className="mt-4 text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-tight">
+        <h1 className="mt-4 text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
           {article.title}
         </h1>
-        <div className="mt-4 flex items-center gap-3 text-sm text-gray-400">
+        <div className="mt-4 flex items-center gap-3 text-sm text-gray-500">
           <span>{article.author}</span>
-          <span className="w-1 h-1 rounded-full bg-gray-300" />
+          <span className="w-1 h-1 rounded-full bg-gray-400" />
           <span>{formatDate(article.createdAt)}</span>
         </div>
       </section>
 
-      {/* Cover */}
       <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 mt-8">
         {article.coverImage ? (
-          <img src={article.coverImage} alt={article.title} className="w-full h-56 sm:h-72 lg:h-80 rounded-2xl object-cover" />
+          <img
+            src={article.coverImage}
+            alt={article.title}
+            className="w-full h-56 sm:h-72 lg:h-80 rounded-2xl object-cover ring-1 ring-gray-100"
+          />
         ) : (
-          <div className={`h-56 sm:h-72 lg:h-80 rounded-2xl bg-gradient-to-br ${gradient}`} />
+          <div className="h-56 sm:h-72 lg:h-80 rounded-2xl ring-1 ring-gray-100" style={{ background: bg }} />
         )}
       </section>
 
-      {/* Article Body */}
       <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10">
         {article.content ? (
-          <div
-            className="prose prose-invert max-w-none"
-            dangerouslySetInnerHTML={{ __html: article.content }}
-          />
+          <div className="prose max-w-none text-gray-800" dangerouslySetInnerHTML={{ __html: article.content }} />
         ) : article.summary ? (
-          <p className="text-gray-400 leading-relaxed text-base">{article.summary}</p>
+          <p className="text-gray-700 leading-relaxed text-base">{article.summary}</p>
         ) : null}
       </section>
 
-      {/* Back link */}
       <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 pb-20">
-        <div className="border-t border-white/10 pt-8">
+        <div className="border-t border-gray-100 pt-8">
           <Link
             href="/news"
-            className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-primary transition-colors"
+            className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-[#2857A4] transition-colors"
           >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
-              />
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
             </svg>
             返回资讯列表
           </Link>

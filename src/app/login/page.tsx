@@ -44,29 +44,28 @@ export default function LoginPage() {
     }
   }
 
+  const inputBase =
+    'w-full px-4 py-2.5 rounded-xl border bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2857A4]/15 focus:border-[#2857A4] text-sm transition-all border-gray-200'
+
   return (
-    <div className="min-h-screen bg-[#0B1628] flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
-        <div className="bg-[#132238] border border-white/10 rounded-2xl shadow-lg p-8">
-          {/* Header */}
+        <div className="card-soft p-8">
           <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              欢迎回来
-            </h1>
-            <p className="text-gray-400 mt-2 text-sm">登录您的 NB OPC 账号</p>
+            <div className="eyebrow mb-3">SIGN IN</div>
+            <h1 className="text-2xl font-bold text-gray-900">委员登录</h1>
+            <p className="text-gray-500 mt-2 text-sm">登录您的 NBOPC 赋能平台账号</p>
           </div>
 
-          {/* Error */}
           {error && (
-            <div className="mb-4 p-3 bg-red-500/10 border border-red-500/20 text-red-400 text-sm rounded-lg">
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl">
               {error}
             </div>
           )}
 
-          {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-1.5">
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1.5">
                 手机号
               </label>
               <input
@@ -76,12 +75,12 @@ export default function LoginPage() {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 maxLength={11}
-                className="w-full px-4 py-2.5 border border-white/10 bg-[#0F1D32] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors text-sm"
+                className={inputBase}
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-1.5">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1.5">
                 密码
               </label>
               <input
@@ -90,35 +89,30 @@ export default function LoginPage() {
                 placeholder="请输入密码"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2.5 border border-white/10 bg-[#0F1D32] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors text-sm"
+                className={inputBase}
               />
             </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full py-2.5 text-white font-medium bg-gradient-to-r from-primary to-secondary rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 text-sm"
-            >
+            <button type="submit" disabled={loading} className="w-full btn-primary !rounded-xl !py-2.5 disabled:opacity-50">
               {loading ? '登录中...' : '登录'}
             </button>
           </form>
 
-          {/* Links */}
           <div className="mt-6 flex items-center justify-between text-sm">
             <button
               type="button"
               onClick={() => setShowForgotTip(!showForgotTip)}
-              className="text-gray-400 hover:text-gray-300 transition-colors"
+              className="text-gray-500 hover:text-gray-700 transition-colors"
             >
               忘记密码？
             </button>
-            <Link href="/register" className="text-primary hover:text-primary/80 font-medium transition-colors">
+            <Link href="/register" className="text-[#2857A4] hover:text-[#1E4580] font-medium transition-colors">
               还没有账号？立即注册
             </Link>
           </div>
 
           {showForgotTip && (
-            <div className="mt-3 p-3 bg-amber-500/10 border border-amber-500/20 text-amber-400 text-sm rounded-lg">
+            <div className="mt-3 p-3 bg-amber-50 border border-amber-200 text-amber-700 text-sm rounded-xl">
               请联系管理员重置密码
             </div>
           )}
